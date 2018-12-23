@@ -1,6 +1,6 @@
 # networth
 Tracks your networth
-![alt-text](./Screenshot.png)
+![alt-text](./img/Screenshot.png)
 
 ## Install
 

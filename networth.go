@@ -1,7 +1,6 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
@@ -72,7 +71,8 @@ func newAsset(n string, s string) error {
 		Holding: 0.0,
 	}
 	Forte.Assets = append(Forte.Assets, nasset)
-	wjson, _ := json.Marshal(Forte)
+
+	wjson, _ := Json.Marshal(Forte)
 	err := ioutil.WriteFile("data/assets.json", wjson, 0644)
 	if err != nil {
 		log.Fatal(err)
@@ -91,7 +91,7 @@ func fund(n string, q string) error {
 			break
 		}
 	}
-	wjson, _ := json.Marshal(Forte)
+	wjson, _ := Json.Marshal(Forte)
 	err = ioutil.WriteFile("data/assets.json", wjson, 0644)
 	if err != nil {
 		log.Fatal(err)

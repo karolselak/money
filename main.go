@@ -1,17 +1,18 @@
 package main
 
 import (
-	"encoding/json"
 	"io/ioutil"
 	"log"
 	"os"
 	"time"
 
+	jsoniter "github.com/json-iterator/go"
 	"github.com/urfave/cli"
 )
 
 var Forte Assets
 var JsonFile *os.File
+var Json = jsoniter.ConfigCompatibleWithStandardLibrary
 
 func main() {
 	app := cli.NewApp()
@@ -43,7 +44,8 @@ func main() {
 				if err != nil {
 					log.Fatal(err)
 				}
-				err = json.Unmarshal(byteValue, &Forte)
+
+				err = Json.Unmarshal(byteValue, &Forte)
 				if err != nil {
 					log.Fatal(err)
 				}
@@ -64,7 +66,8 @@ func main() {
 				if err != nil {
 					log.Fatal(err)
 				}
-				err = json.Unmarshal(byteValue, &Forte)
+
+				err = Json.Unmarshal(byteValue, &Forte)
 				if err != nil {
 					log.Fatal(err)
 				}
@@ -86,7 +89,7 @@ func main() {
 				if err != nil {
 					log.Fatal(err)
 				}
-				err = json.Unmarshal(byteValue, &Forte)
+				err = Json.Unmarshal(byteValue, &Forte)
 				if err != nil {
 					log.Fatal(err)
 				}
