@@ -5,8 +5,6 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
-	"os"
-	"strconv"
 
 	cmc "github.com/coincircle/go-coinmarketcap"
 	"github.com/fatih/color"
@@ -17,50 +15,61 @@ type Assets struct {
 }
 
 type Asset struct {
-	Name    string `json:"name"`
-	Symbol  string `json:"symbol"`
-	Holding string `json:"holding"`
+	Name    string  `json:"name"`
+	Symbol  string  `json:"symbol"`
+	Holding float64 `json:"holding"`
 }
 
 func list() error {
-	jsonFile, err := os.Open("data/assets.json")
-	if err != nil {
-		log.Fatalf("Cant open json file \n")
-	}
-	defer Close(jsonFile)
-	byteValue, err := ioutil.ReadAll(jsonFile)
-	if err != nil {
-		log.Fatal(err)
-	}
-	var assets Assets
-	err = json.Unmarshal(byteValue, &assets)
-	if err != nil {
-		log.Fatal(err)
-	}
-	g := color.New(color.FgGreen).Add(color.Bold)
-	b := color.New(color.FgBlue).Add(color.Bold)
-	c := color.New(color.FgCyan).Add(color.Bold)
-	y := color.New(color.FgYellow).Add(color.Bold)
-	y.Println("Asset        Holding        Worth        ")
-	for i := 0; i < len(assets.Assets); i++ {
+	y := color.New(Y).Add(BL)
+	g := color.New(G).Add(BL)
+	b := color.New(B).Add(BL)
+	w := color.New(W).Add(BL)
+	y.Print("Asset")
+	y.Print("        ")
+	y.Print("Holding")
+	y.Print("        ")
+	y.Print("Worth")
+	fmt.Println()
+	for i := 0; i < len(Forte.Assets); i++ {
+
 		price, err := cmc.Price(&cmc.PriceOptions{
-			Symbol:  assets.Assets[i].Symbol,
+			Symbol:  Forte.Assets[i].Symbol,
 			Convert: "USD",
 		})
 		if err != nil {
 			log.Fatal(err)
 		}
-		g.Print(assets.Assets[i].Symbol + "          ")
-		b.Print(assets.Assets[i].Holding + "          ")
-		h, err := strconv.ParseFloat(assets.Assets[i].Holding, 64)
-		c.Print(int(price * h))
-		println()
+		sym := Forte.Assets[i].Symbol
+		hld := Forte.Assets[i].Holding
+		dig := NumDig(hld)
+		b.Print(sym)
+		b.Print("          ")
+		color.Set(W, BL)
+		fmt.Printf("%5.2f", hld)
+		for i := (5 - dig); i > 0; i-- {
+			fmt.Print(" ")
+		}
+		color.Unset()
+		w.Print("       ")
+		g.Print(int(price * Forte.Assets[i].Holding))
+		fmt.Println()
 	}
 	return nil
 }
 
-func add(n string, s string, q string) error {
+func newAsset(n string, s string) error {
 
-	fmt.Println(n + " " + s + " " + q)
+	nasset := Asset{
+		Name:    n,
+		Symbol:  s,
+		Holding: 0.0,
+	}
+	Forte.Assets = append(Forte.Assets, nasset)
+	wjson, _ := json.Marshal(Forte)
+	err := ioutil.WriteFile("data/assets.json", wjson, 0644)
+	if err != nil {
+		log.Fatal(err)
+	}
 	return nil
 }
