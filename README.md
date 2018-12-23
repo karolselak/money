@@ -1,4 +1,4 @@
-# netwoeth
+# networth
 Tracks your networth
 
 ## Arguments
