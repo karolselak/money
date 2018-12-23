@@ -71,6 +71,28 @@ func main() {
 				return newAsset(c.Args().Get(0), c.Args().Get(1))
 			},
 		},
+		{
+
+			Name:    "fund",
+			Aliases: []string{"na"},
+			Usage:   "networth fund <asset symbol> <asset quantity>",
+			Action: func(c *cli.Context) error {
+				JsonFile, err := os.Open("data/assets.json")
+				if err != nil {
+					log.Fatalf("Cant open json file \n")
+				}
+				defer Close(JsonFile)
+				byteValue, err := ioutil.ReadAll(JsonFile)
+				if err != nil {
+					log.Fatal(err)
+				}
+				err = json.Unmarshal(byteValue, &Forte)
+				if err != nil {
+					log.Fatal(err)
+				}
+				return fund(c.Args().Get(0), c.Args().Get(1))
+			},
+		},
 	}
 	err := app.Run(os.Args)
 	if err != nil {

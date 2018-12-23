@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"strconv"
 
 	cmc "github.com/coincircle/go-coinmarketcap"
 	"github.com/fatih/color"
@@ -31,6 +32,7 @@ func list() error {
 	y.Print("        ")
 	y.Print("Worth")
 	fmt.Println()
+	var sum float64 = 0
 	for i := 0; i < len(Forte.Assets); i++ {
 
 		price, err := cmc.Price(&cmc.PriceOptions{
@@ -46,15 +48,19 @@ func list() error {
 		b.Print(sym)
 		b.Print("          ")
 		color.Set(W, BL)
-		fmt.Printf("%5.2f", hld)
+		fmt.Printf("%.2f", hld)
 		for i := (5 - dig); i > 0; i-- {
 			fmt.Print(" ")
 		}
 		color.Unset()
 		w.Print("       ")
 		g.Print(int(price * Forte.Assets[i].Holding))
+		sum += (price * hld)
 		fmt.Println()
 	}
+	y.Print("Net Worth: ")
+	g.Printf("%.2f", sum)
+	y.Println(" USD")
 	return nil
 }
 
@@ -68,6 +74,25 @@ func newAsset(n string, s string) error {
 	Forte.Assets = append(Forte.Assets, nasset)
 	wjson, _ := json.Marshal(Forte)
 	err := ioutil.WriteFile("data/assets.json", wjson, 0644)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return nil
+}
+
+func fund(n string, q string) error {
+	hld, err := strconv.ParseFloat(q, 64)
+	if err != nil {
+		log.Fatal(err)
+	}
+	for i := 0; i < len(Forte.Assets); i++ {
+		if n == Forte.Assets[i].Symbol {
+			Forte.Assets[i].Holding += hld
+			break
+		}
+	}
+	wjson, _ := json.Marshal(Forte)
+	err = ioutil.WriteFile("data/assets.json", wjson, 0644)
 	if err != nil {
 		log.Fatal(err)
 	}
