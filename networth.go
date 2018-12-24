@@ -10,10 +10,12 @@ import (
 	"github.com/fatih/color"
 )
 
+// Assets an array of Asset
 type Assets struct {
 	Assets []Asset `json:"Assets"`
 }
 
+// Asset stuct
 type Asset struct {
 	Name    string  `json:"name"`
 	Symbol  string  `json:"symbol"`
@@ -31,7 +33,7 @@ func list() error {
 	y.Print("        ")
 	y.Print("Worth")
 	fmt.Println()
-	var sum float64 = 0
+	var sum float64
 	for i := 0; i < len(Forte.Assets); i++ {
 
 		price, err := cmc.Price(&cmc.PriceOptions{
@@ -72,7 +74,7 @@ func newAsset(n string, s string) error {
 	}
 	Forte.Assets = append(Forte.Assets, nasset)
 
-	wjson, _ := Json.Marshal(Forte)
+	wjson, _ := JSON.Marshal(Forte)
 	err := ioutil.WriteFile("data/assets.json", wjson, 0644)
 	if err != nil {
 		log.Fatal(err)
@@ -91,7 +93,7 @@ func fund(n string, q string) error {
 			break
 		}
 	}
-	wjson, _ := Json.Marshal(Forte)
+	wjson, _ := JSON.Marshal(Forte)
 	err = ioutil.WriteFile("data/assets.json", wjson, 0644)
 	if err != nil {
 		log.Fatal(err)

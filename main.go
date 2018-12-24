@@ -1,7 +1,6 @@
 package main
 
 import (
-	"io/ioutil"
 	"log"
 	"os"
 	"time"
@@ -10,9 +9,14 @@ import (
 	"github.com/urfave/cli"
 )
 
+// Forte global var containing assets
 var Forte Assets
-var JsonFile *os.File
-var Json = jsoniter.ConfigCompatibleWithStandardLibrary
+
+// JSONFile pointer to the assets.json file
+var JSONFile *os.File
+
+// JSON accessor to json-iterator lib
+var JSON = jsoniter.ConfigCompatibleWithStandardLibrary
 
 func main() {
 	app := cli.NewApp()
@@ -35,20 +39,9 @@ func main() {
 			UsageText: "newtorth list - lists all assets",
 			ArgsUsage: "",
 			Action: func(c *cli.Context) error {
-				JsonFile, err := os.Open("data/assets.json")
-				if err != nil {
-					log.Fatalf("Cant open json file \n")
-				}
-				defer Close(JsonFile)
-				byteValue, err := ioutil.ReadAll(JsonFile)
-				if err != nil {
-					log.Fatal(err)
-				}
-
-				err = Json.Unmarshal(byteValue, &Forte)
-				if err != nil {
-					log.Fatal(err)
-				}
+				JSONFile = OpenJSON()
+				defer Close(JSONFile)
+				ReadJSON(JSONFile)
 				return list()
 			},
 		},
@@ -57,20 +50,9 @@ func main() {
 			Aliases: []string{"na"},
 			Usage:   "networth add <asset name> <asset symbol> <asset quantity>",
 			Action: func(c *cli.Context) error {
-				JsonFile, err := os.Open("data/assets.json")
-				if err != nil {
-					log.Fatalf("Cant open json file \n")
-				}
-				defer Close(JsonFile)
-				byteValue, err := ioutil.ReadAll(JsonFile)
-				if err != nil {
-					log.Fatal(err)
-				}
-
-				err = Json.Unmarshal(byteValue, &Forte)
-				if err != nil {
-					log.Fatal(err)
-				}
+				JSONFile = OpenJSON()
+				defer Close(JSONFile)
+				ReadJSON(JSONFile)
 				return newAsset(c.Args().Get(0), c.Args().Get(1))
 			},
 		},
@@ -80,19 +62,9 @@ func main() {
 			Aliases: []string{"na"},
 			Usage:   "networth fund <asset symbol> <asset quantity>",
 			Action: func(c *cli.Context) error {
-				JsonFile, err := os.Open("data/assets.json")
-				if err != nil {
-					log.Fatalf("Cant open json file \n")
-				}
-				defer Close(JsonFile)
-				byteValue, err := ioutil.ReadAll(JsonFile)
-				if err != nil {
-					log.Fatal(err)
-				}
-				err = Json.Unmarshal(byteValue, &Forte)
-				if err != nil {
-					log.Fatal(err)
-				}
+				JSONFile = OpenJSON()
+				defer Close(JSONFile)
+				ReadJSON(JSONFile)
 				return fund(c.Args().Get(0), c.Args().Get(1))
 			},
 		},
