@@ -9,8 +9,11 @@ import (
 	"github.com/urfave/cli"
 )
 
+// Config global var
+var Conf *Config
+
 // Forte global var containing assets
-var Forte Assets
+var Forte *Assets
 
 // JSONFile pointer to the assets.json file
 var JSONFile *os.File
@@ -39,6 +42,7 @@ func main() {
 			UsageText: "newtorth list - lists all assets",
 			ArgsUsage: "",
 			Action: func(c *cli.Context) error {
+				configure()
 				JSONFile = OpenJSON()
 				defer Close(JSONFile)
 				ReadJSON(JSONFile)
@@ -48,8 +52,9 @@ func main() {
 		{
 			Name:    "add",
 			Aliases: []string{"a"},
-			Usage:   "networth add <asset name> <asset symbol> <asset quantity>",
+			Usage:   "networth add <asset name> <asset symbol>",
 			Action: func(c *cli.Context) error {
+				configure()
 				JSONFile = OpenJSON()
 				defer Close(JSONFile)
 				ReadJSON(JSONFile)
@@ -62,6 +67,7 @@ func main() {
 			Aliases: []string{"mod", "m"},
 			Usage:   "networth modify <asset symbol> <sign> <asset quantity>",
 			Action: func(c *cli.Context) error {
+				configure()
 				JSONFile = OpenJSON()
 				defer Close(JSONFile)
 				ReadJSON(JSONFile)

@@ -5,20 +5,41 @@ Tracks your networth
 ## Install
 
 ```bash
-go get -u github.com/mohfunk/networth
+$ go get -u github.com/mohfunk/networth
 ```
 
 ## Commands
 
 ### Usage
 ```bash
-networth <command> <args ...>
+$ networth <command> <args ...>
 
 ```
-#### Avaliable Commands, so far.
+#### list
+Lists all your assets
+```bash
+$ networth list # or networth l 
+```
 
-- list (or l): lists all your assets and their value
-- newAsset <Name> <Symbol> (or ne <Name> <Symbol>): Creates a new asset
-> note, you must add assets with newAsset after installation
-- fund <Symbol> <Amount>: adds <Amount> to your holdings.
+#### add
+Adds an asset
+```bash
+$ networth add <Symbol> <Name> # or networth a
+
+# Example
+$ networth add BTC bitcoin
+
+```
+
+#### modify
+```bash
+#                           +/-
+$ networth modify <Symbol> <Sign> <Quantity> # or networth mod/m
+
+# Example
+$ networth m BTC + 2.3
+$ networth m DCR - 14
+```
+Modify your holdings.
+
 

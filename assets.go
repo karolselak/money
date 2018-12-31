@@ -21,3 +21,10 @@ func createAsset(n string, s string) Asset {
 	}
 	return na
 }
+
+func initAssets() {
+	Forte = &Assets{
+		Assets: []Asset{},
+	}
+	writeJSON(*Forte)
+}

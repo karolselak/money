@@ -2,8 +2,14 @@ package main
 
 func list() error {
 	var sum float64
+	leng := len(Forte.Assets)
+
+	if leng == 0 {
+		println("You have no assets, run networth add <SYMBOL> <NAME>")
+		return nil
+	}
 	listHead()
-	for i := 0; i < len(Forte.Assets); i++ {
+	for i := 0; i < leng; i++ {
 		sym := Forte.Assets[i].Symbol
 		price := getPrice(sym)
 		hld := Forte.Assets[i].Holding
@@ -18,7 +24,7 @@ func list() error {
 func newAsset(n string, s string) error {
 	nasset := createAsset(n, s)
 	Forte.Assets = append(Forte.Assets, nasset)
-	writeJSON(Forte)
+	writeJSON(*Forte)
 	printConfirm(s)
 	return nil
 }
@@ -39,7 +45,7 @@ func mod(n string, s string, q string) error {
 		}
 	}
 
-	writeJSON(Forte)
+	writeJSON(*Forte)
 	price := getPrice(n)
 	printMod(n, price, preHold, curHold)
 	return nil
