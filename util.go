@@ -9,7 +9,7 @@ import (
 	"path/filepath"
 	"strconv"
 
-	"github.com/fatih/color"
+	cmc "github.com/coincircle/go-coinmarketcap"
 )
 
 // Close closes open resource
@@ -19,39 +19,6 @@ func Close(c io.Closer) {
 		log.Fatal(err)
 	}
 }
-
-// G green
-var G = color.FgGreen
-
-// R red
-var R = color.FgRed
-
-// Y yellow
-var Y = color.FgYellow
-
-// C cyan
-var C = color.FgCyan
-
-// B blue
-var B = color.FgBlue
-
-// M magenta
-var M = color.FgMagenta
-
-// W white
-var W = color.FgWhite
-
-// BL bold
-var BL = color.Bold
-
-// UL underline
-var UL = color.Underline
-
-// BG background color black
-var BG = color.BgBlack
-
-// FG background color white
-var FG = color.BgWhite
 
 // NumDig returns the numbers of digits
 func NumDig(n float64) int {
@@ -81,4 +48,35 @@ func ReadJSON(JF *os.File) {
 	if err != nil {
 		log.Fatalf("Unmarshal failed")
 	}
+}
+
+// writeJSON writes json
+func writeJSON(Forte Assets) {
+	wjson, _ := JSON.Marshal(Forte)
+	err := ioutil.WriteFile("data/assets.json", wjson, 0644)
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+// getPrice fetches the price of a currency
+func getPrice(sym string) float64 {
+
+	price, err := cmc.Price(&cmc.PriceOptions{
+		Symbol:  sym,
+		Convert: "USD",
+	})
+	if err != nil {
+		log.Fatal(err)
+	}
+	return price
+}
+
+// stf converts string to float
+func stf(s string) float64 {
+	f, err := strconv.ParseFloat(s, 64)
+	if err != nil {
+		log.Fatal(err)
+	}
+	return f
 }

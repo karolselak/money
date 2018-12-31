@@ -46,8 +46,8 @@ func main() {
 			},
 		},
 		{
-			Name:    "newAsset",
-			Aliases: []string{"na"},
+			Name:    "add",
+			Aliases: []string{"a"},
 			Usage:   "networth add <asset name> <asset symbol> <asset quantity>",
 			Action: func(c *cli.Context) error {
 				JSONFile = OpenJSON()
@@ -65,7 +65,7 @@ func main() {
 				JSONFile = OpenJSON()
 				defer Close(JSONFile)
 				ReadJSON(JSONFile)
-				return fund(c.Args().Get(0), c.Args().Get(1), c.Args().Get(2))
+				return mod(c.Args().Get(0), c.Args().Get(1), c.Args().Get(2))
 			},
 		},
 	}
