@@ -82,14 +82,18 @@ func newAsset(n string, s string) error {
 	return nil
 }
 
-func fund(n string, q string) error {
+func fund(n string, s string, q string) error {
 	hld, err := strconv.ParseFloat(q, 64)
 	if err != nil {
 		log.Fatal(err)
 	}
 	for i := 0; i < len(Forte.Assets); i++ {
 		if n == Forte.Assets[i].Symbol {
-			Forte.Assets[i].Holding += hld
+			if s == "+" {
+				Forte.Assets[i].Holding += hld
+			} else if s == "-" {
+				Forte.Assets[i].Holding -= hld
+			}
 			break
 		}
 	}

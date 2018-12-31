@@ -22,9 +22,9 @@ func main() {
 	app := cli.NewApp()
 	app.Name = "networth"
 	app.Usage = "track your networth"
-	app.Version = "0.1"
+	app.Version = "0.2"
 	app.Compiled = time.Now()
-	app.Copyright = "(c) MIT 2018"
+	app.Copyright = "(c) MIT 2019"
 	app.Authors = []cli.Author{
 		cli.Author{
 			Name:  "Mohammed Alhaythm",
@@ -58,14 +58,14 @@ func main() {
 		},
 		{
 
-			Name:    "fund",
-			Aliases: []string{"na"},
-			Usage:   "networth fund <asset symbol> <asset quantity>",
+			Name:    "modify",
+			Aliases: []string{"mod", "m"},
+			Usage:   "networth modify <asset symbol> <sign> <asset quantity>",
 			Action: func(c *cli.Context) error {
 				JSONFile = OpenJSON()
 				defer Close(JSONFile)
 				ReadJSON(JSONFile)
-				return fund(c.Args().Get(0), c.Args().Get(1))
+				return fund(c.Args().Get(0), c.Args().Get(1), c.Args().Get(2))
 			},
 		},
 	}
