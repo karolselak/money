@@ -1,4 +1,10 @@
-package main
+package data
+
+import (
+	"io/ioutil"
+	"log"
+	"os"
+)
 
 // Assets an array of Asset
 type Assets struct {
@@ -28,3 +34,4 @@ func initAssets() {
 	}
 	writeJSON(*Forte)
 }
+

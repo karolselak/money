@@ -1,4 +1,4 @@
-package main
+package data
 
 import (
 	"io/ioutil"
@@ -6,18 +6,21 @@ import (
 	"os"
 )
 
-// OpenJSON returns a pointer to the json file
-func OpenJSON() *os.File {
+type Data interface {
+	readData()
+	writeData()
+}
 
-	JSONFile, err := os.Open(Conf.dataFile)
-	if err != nil {
-		log.Fatal("open failed")
-	}
-	return JSONFile
+func (d Assets) readData() {
+
+}
+
+func (d Assets) writeData() {
+
 }
 
 // ReadJSON unmarshels jsons and return a byte
-func ReadJSON(JF *os.File) {
+func ReadData(JF *os.File) {
 	byteValue, err := ioutil.ReadAll(JF)
 	if err != nil {
 		log.Fatalf("reading failed")
@@ -29,7 +32,7 @@ func ReadJSON(JF *os.File) {
 }
 
 // writeJSON writes json
-func writeJSON(Forte Assets) {
+func writeData(Forte Assets) {
 	wjson, _ := JSON.Marshal(Forte)
 	err := ioutil.WriteFile(Conf.dataFile, wjson, 0644)
 	if err != nil {

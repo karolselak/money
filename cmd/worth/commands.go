@@ -1,6 +1,6 @@
-package main
+package worth
 
-func list() error {
+func list(Forte Assets) error {
 	var sum float64
 	leng := len(Forte.Assets)
 

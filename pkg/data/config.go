@@ -1,11 +1,14 @@
-package main
+package data
 
 import (
 	"log"
 	"os"
 	"os/user"
 	"path/filepath"
+
+	jsoniter "github.com/json-iterator/go"
 )
+
 
 // Asset stuct
 type Config struct {
@@ -17,7 +20,7 @@ type Config struct {
 func initConfig() {
 	usr, _ := user.Current()
 	dir := usr.HomeDir
-	ddir := filepath.Join(dir, "go/src/github.com/mohfunk/netWorth/data")
+	ddir := filepath.Join(dir, ".networth")
 	jfile := filepath.Join(ddir, "assets.json")
 	Conf = &Config{
 		dataDir:  ddir,
