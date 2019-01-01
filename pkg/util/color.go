@@ -16,11 +16,11 @@ const (
 	FG = color.BgWhite
 )
 
-var Clr []*color.Color
-var Bld []*color.Color
-var Und []*color.Color
+var Clr [7]*color.Color
+var Bld [7]*color.Color
+var Und [7]*color.Color
 
-func setClr() {
+func SetClr() {
 	Clr[0] = color.New(R)
 	Clr[1] = color.New(G)
 	Clr[2] = color.New(B)
@@ -34,7 +34,7 @@ func setClr() {
 	}
 }
 
-func bldSet(c color.Atrribute) {
+func bldSet(c color.Attribute) {
 	color.Set(c, BO)
 }
 func unset() {

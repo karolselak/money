@@ -22,7 +22,7 @@ func NumDig(n float64) int {
 }
 
 // getPrice fetches the price of a currency
-func getPrice(sym string) float64 {
+func GetPrice(sym string) float64 {
 
 	price, err := cmc.Price(&cmc.PriceOptions{
 		Symbol:  sym,
@@ -35,7 +35,7 @@ func getPrice(sym string) float64 {
 }
 
 // stf converts string to float
-func stf(s string) float64 {
+func Stf(s string) float64 {
 	f, err := strconv.ParseFloat(s, 64)
 	if err != nil {
 		log.Fatal(err)

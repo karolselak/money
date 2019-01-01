@@ -6,7 +6,6 @@ import (
 	"os"
 
 	jsoniter "github.com/json-iterator/go"
-	"github.com/"
 )
 
 // JSON accessor to json-iterator lib
@@ -22,3 +21,23 @@ func OpenJSON(f string) *os.File {
 	return JSONFile
 }
 
+// ReadJSON unmarshels jsons and return a byte
+func ReadJSON(JF *os.File, v interface{}) {
+	byteValue, err := ioutil.ReadAll(JF)
+	if err != nil {
+		log.Fatalf("reading failed")
+	}
+	err = JSON.Unmarshal(byteValue, v)
+	if err != nil {
+		log.Fatal(err)
+	}
+}
+
+// writeJSON writes json
+func WriteJSON(s string, v interface{}) {
+	wjson, _ := JSON.Marshal(&v)
+	err := ioutil.WriteFile(s, wjson, 0644)
+	if err != nil {
+		log.Fatal(err)
+	}
+}

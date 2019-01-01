@@ -1,7 +1,9 @@
-package worth
+package main
 
 import (
 	"fmt"
+
+	"github.com/mohfunk/money/pkg/util"
 )
 
 // listHead prints table Header
@@ -14,41 +16,41 @@ func digSp(dig int) {
 	}
 }
 func listHead() {
-	Bld[0].Print("Asset")
+	util.SetClr()
+	util.Bld[0].Print("Asset")
 	sepCol()
-	Bld[0].Print("Holding")
+	util.Bld[0].Print("Holding")
 	sepCol()
-	Bld[0].Print("Worth")
+	util.Bld[0].Print("Worth")
 	fmt.Println()
 }
 
 // listItem prints asset  row
 func listItem(sym string, hld float64, price float64, dig int) {
 
-	Bld[2].Print(sym)
+	util.Bld[2].Print(sym)
 
 	sepCol()
 
-	bldSet(3)
-	fmt.Printf("%.2f", hld)
-	unset()
+	util.Bld[3].Printf("%.2f", hld)
 
 	sepCol()
 
 	digSp(dig)
 	sepCol()
-	Bld[1].Print(int(price * hld))
+	util.Bld[1].Print(int(price * hld))
 	fmt.Println()
 
 }
 
 // listFoot prints table footer
 func listFoot(sum float64) {
-	Und[3].Print("Net Worth: ")
-	Und[1].Printf("%.2f", sum)
-	Und[3].Println(" USD")
+	util.Und[3].Print("Net Worth: ")
+	util.Und[1].Printf("%.2f", sum)
+	util.Und[3].Println(" USD")
 }
 
+/*
 // printMod prints asset after modification
 func printMod(n string, price float64, preHold float64, curHold float64) {
 
@@ -83,3 +85,4 @@ func printConfirm(s string) {
 	Und[2].Print(s)
 	Uld[6].Println(" Added!")
 }
+*/

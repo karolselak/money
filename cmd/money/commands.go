@@ -1,6 +1,10 @@
-package worth
+package main
 
-func list(Forte Assets) error {
+import (
+	"github.com/mohfunk/money/pkg/util"
+)
+
+func list() error {
 	var sum float64
 	leng := len(Forte.Assets)
 
@@ -11,9 +15,9 @@ func list(Forte Assets) error {
 	listHead()
 	for i := 0; i < leng; i++ {
 		sym := Forte.Assets[i].Symbol
-		price := getPrice(sym)
+		price := util.GetPrice(sym)
 		hld := Forte.Assets[i].Holding
-		dig := NumDig(hld)
+		dig := util.NumDig(hld)
 		sum += (price * hld)
 		listItem(sym, hld, price, dig)
 	}
@@ -21,10 +25,11 @@ func list(Forte Assets) error {
 	return nil
 }
 
-func newAsset(n string, s string) error {
-	nasset := createAsset(n, s)
+/*
+func add(n string, s string) error {
+	nasset := data.CreateAsset(n, s)
 	Forte.Assets = append(Forte.Assets, nasset)
-	writeJSON(*Forte)
+	util.WriteJSON(Conf.DataFile, Forte)
 	printConfirm(s)
 	return nil
 }
@@ -50,3 +55,4 @@ func mod(n string, s string, q string) error {
 	printMod(n, price, preHold, curHold)
 	return nil
 }
+*/

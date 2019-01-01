@@ -1,11 +1,5 @@
 package data
 
-import (
-	"io/ioutil"
-	"log"
-	"os"
-)
-
 // Assets an array of Asset
 type Assets struct {
 	Assets []Asset `json:"Assets"`
@@ -19,8 +13,8 @@ type Asset struct {
 }
 
 // createAsset returns an asset
-func createAsset(n string, s string) Asset {
-	na := Asset{
+func CreateAsset(n string, s string) *Asset {
+	na := &Asset{
 		Name:    n,
 		Symbol:  s,
 		Holding: 0.0,
@@ -28,10 +22,9 @@ func createAsset(n string, s string) Asset {
 	return na
 }
 
-func initAssets() {
-	Forte = &Assets{
+func InitAssets() *Assets {
+	f := &Assets{
 		Assets: []Asset{},
 	}
-	writeJSON(*Forte)
+	return f
 }
-
