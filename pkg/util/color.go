@@ -22,16 +22,26 @@ var Und [7]*color.Color
 
 func SetClr() {
 	Clr[0] = color.New(R)
+	Bld[0] = color.New(R).Add(BO)
+	Und[0] = color.New(R).Add(UL)
 	Clr[1] = color.New(G)
+	Bld[1] = color.New(G).Add(BO)
+	Und[1] = color.New(G).Add(UL)
 	Clr[2] = color.New(B)
+	Bld[2] = color.New(B).Add(BO)
+	Und[2] = color.New(B).Add(UL)
 	Clr[3] = color.New(Y)
+	Bld[3] = color.New(Y).Add(BO)
+	Und[3] = color.New(Y).Add(UL)
 	Clr[4] = color.New(C)
+	Bld[4] = color.New(C).Add(BO)
+	Und[4] = color.New(C).Add(UL)
 	Clr[5] = color.New(M)
+	Bld[5] = color.New(M).Add(BO)
+	Und[5] = color.New(M).Add(UL)
 	Clr[6] = color.New(W)
-	for i := 0; i < 7; i++ {
-		Bld[i] = Clr[i].Add(BO)
-		Und[i] = Clr[i].Add(UL)
-	}
+	Bld[6] = color.New(W).Add(BO)
+	Und[6] = color.New(W).Add(UL)
 }
 
 func bldSet(c color.Attribute) {
