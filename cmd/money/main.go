@@ -5,13 +5,14 @@ import (
 	"os"
 	"time"
 
+	"github.com/mohfunk/money/cmd/money/worth"
 	"github.com/mohfunk/money/pkg/data"
 	"github.com/mohfunk/money/pkg/util"
 	"github.com/urfave/cli"
 )
 
 type fn func(a ...string) error
-type fnc func() error
+type fnc func(d *data.Assets) error
 
 // Config global var
 var Conf *data.Config
@@ -27,7 +28,7 @@ func execute(f fnc) error {
 	JSONFile = util.OpenJSON(Conf.DataFile)
 	defer util.Close(JSONFile)
 	util.ReadJSON(JSONFile, Forte)
-	return f()
+	return f(Forte)
 }
 func main() {
 	app := cli.NewApp()
@@ -51,7 +52,7 @@ func main() {
 					Name:    "list",
 					Aliases: []string{"l"},
 					Action: func(c *cli.Context) error {
-						return execute(list)
+						return execute(worth.List)
 					},
 				},
 				//	{

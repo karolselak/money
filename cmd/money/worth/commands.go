@@ -1,10 +1,11 @@
-package main
+package worth
 
 import (
+	"github.com/mohfunk/money/pkg/data"
 	"github.com/mohfunk/money/pkg/util"
 )
 
-func list() error {
+func List(Forte *data.Assets) error {
 	var sum float64
 	leng := len(Forte.Assets)
 

@@ -26,7 +26,7 @@ func GetPrice(sym string) float64 {
 
 	price, err := cmc.Price(&cmc.PriceOptions{
 		Symbol:  sym,
-		Convert: "USD",
+		Convert: "CAD",
 	})
 	if err != nil {
 		log.Fatal(err)

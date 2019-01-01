@@ -1,4 +1,4 @@
-package main
+package worth
 
 import (
 	"fmt"
@@ -7,9 +7,6 @@ import (
 )
 
 // listHead prints table Header
-func sepCol() {
-	print("                ")
-}
 func digSp(dig int) {
 	for i := (5 - dig); i > 0; i-- {
 		fmt.Print(" ")
@@ -17,10 +14,10 @@ func digSp(dig int) {
 }
 func listHead() {
 	util.SetClr()
-	util.Bld[0].Print("Asset")
-	sepCol()
+	util.Bld[0].Print("Asset  ")
+	print("                ")
 	util.Bld[0].Print("Holding")
-	sepCol()
+	print("                ")
 	util.Bld[0].Print("Worth")
 	fmt.Println()
 }
@@ -29,15 +26,12 @@ func listHead() {
 func listItem(sym string, hld float64, price float64, dig int) {
 
 	util.Bld[2].Print(sym)
-
-	sepCol()
+	print("    ")
+	print("                ")
 
 	util.Bld[3].Printf("%.2f", hld)
-
-	sepCol()
-
 	digSp(dig)
-	sepCol()
+	print("               ")
 	util.Bld[1].Print(int(price * hld))
 	fmt.Println()
 
@@ -45,9 +39,11 @@ func listItem(sym string, hld float64, price float64, dig int) {
 
 // listFoot prints table footer
 func listFoot(sum float64) {
+
+	fmt.Println()
 	util.Und[3].Print("Net Worth: ")
-	util.Und[1].Printf("%.2f", sum)
-	util.Und[3].Println(" USD")
+	util.Bld[1].Printf("%.2f", sum)
+	util.Und[3].Println(" CAD")
 }
 
 /*
