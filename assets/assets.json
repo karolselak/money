@@ -1,0 +1,22 @@
+{
+    "wealth":
+    {
+        "fiat":
+        [
+            { "name": "us-dollar", "symbol": "USD", "holding": 1.0 },
+            { "name": "ca-dollar", "symbol": "CAD", "holding": 1.0 }
+        ],
+
+        "crypto":
+        [
+            { "name": "bitcoin", "symbol": "BTC", "holding": 0.17 },
+            { "name": "bitcoin-cash", "symbol": "BCH", "holding": 1.0 }
+        ],
+
+        "metals":
+        [
+            { "name": "gold", "symbol": "GLD", "holding": 0.1 },
+            { "name": "silver", "symbol": "SLV", "holding": 1.0 }
+        ]
+    }
+}

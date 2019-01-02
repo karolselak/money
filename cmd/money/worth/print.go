@@ -22,9 +22,17 @@ func listHead() {
 	fmt.Println()
 }
 
+// listCat
+func listCat(cat string) {
+	print("       ")
+	print("                ")
+	util.Bld[5].Print(cat)
+	println()
+
+}
+
 // listItem prints asset  row
 func listItem(sym string, hld float64, price float64, dig int) {
-
 	util.Bld[2].Print(sym)
 	print("    ")
 	print("                ")

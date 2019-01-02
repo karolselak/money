@@ -1,24 +1,24 @@
 package main
 
 import (
-	"log"
 	"os"
 	"time"
 
 	"github.com/mohfunk/money/cmd/money/worth"
 	"github.com/mohfunk/money/pkg/data"
 	"github.com/mohfunk/money/pkg/util"
+	log "github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 )
 
 type fn func(a ...string) error
-type fnc func(d *data.Assets) error
+type fnc func(d *data.Wealth) error
 
 // Config global var
 var Conf *data.Config
 
 // Forte global var containing assets
-var Forte *data.Assets = &data.Assets{}
+var Forte *data.Wealth = &data.Wealth{}
 
 // JSONFile pointer to the assets.json file
 var JSONFile *os.File
@@ -32,9 +32,12 @@ func execute(f fnc) error {
 }
 func main() {
 	app := cli.NewApp()
+	log.WithFields(log.Fields{
+		"step": "init",
+	}).Info("NewApp")
 	app.Name = "money"
 	app.Usage = "track your finances"
-	app.Version = "0.3"
+	app.Version = "0.4"
 	app.Compiled = time.Now()
 	app.Copyright = "(c) MIT 2019"
 	app.Authors = []cli.Author{
@@ -74,6 +77,9 @@ func main() {
 	}
 	err := app.Run(os.Args)
 	if err != nil {
-		log.Fatal(err)
+		log.WithFields(log.Fields{
+			"error": err,
+		}).Fatal("app.Run failed.")
+
 	}
 }

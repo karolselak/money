@@ -1,8 +1,10 @@
 package data
 
 // Assets an array of Asset
-type Assets struct {
-	Assets []Asset `json:"Assets"`
+type Wealth struct {
+	Fiat   []Asset `json:fiat`
+	Crypto []Asset `json:"crypto"`
+	Metals []Asset `json:"metals"`
 }
 
 // Asset stuct
@@ -22,9 +24,6 @@ func CreateAsset(n string, s string) *Asset {
 	return na
 }
 
-func InitAssets() *Assets {
-	f := &Assets{
-		Assets: []Asset{},
-	}
-	return f
-}
+//func EmpAssets(a *Assets) bool {
+//
+//}
