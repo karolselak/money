@@ -22,3 +22,12 @@
 
 ### Data ###
 /data/
+
+### logs ###
+log.json
+
+### bin ###
+/.bin/
+
+### justfile ###
+justfile
