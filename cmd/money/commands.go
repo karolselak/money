@@ -15,7 +15,7 @@ func list(w *Wealth) error {
 	for i := 0; i < 2; i++ {
 		data = append(data, []string{})
 		data[ind] = append(data[ind], "")
-		data[ind] = append(data[ind], w.Wealth[i].Type)
+		data[ind] = append(data[ind], "")
 		data[ind] = append(data[ind], "")
 		for j := 0; j < len(w.Wealth[i].Assets); j++ {
 			ind++
