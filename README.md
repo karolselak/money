@@ -1,5 +1,5 @@
 # `Money`
-Manage your finances from the terminal
+Manage your finances from the terminal   
 ![alt-text](./.img.png)
 
 ## Install
