@@ -5,15 +5,15 @@ type Wealth struct {
 	Wealth []Assets
 }
 type Assets struct {
-	Type   string
-	Assets []Asset
+	Type   string  `json:"type"`
+	Assets []Asset `json:"assets"`
 }
 
 // Asset stuct contain 1 asset type
 type Asset struct {
-	Name    string
-	Symbol  string
-	Holding float64
+	Name    string  `json:"name"`
+	Symbol  string  `json:"symbol"`
+	Holding float64 `json:"holding"`
 }
 
 func NewWealth() *Wealth {

@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os"
 	"time"
@@ -38,7 +37,7 @@ func (a *Application) executeAction() error {
 			"error": err,
 		}).Fatal("Unmarshal assets file failed")
 	}
-	fmt.Println(*a.wealth)
+	list(a.wealth)
 	return nil
 }
 
