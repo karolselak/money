@@ -1,4 +1,0 @@
-{"file":"/Users/moh/go/src/github.com/mohfunk/money/cmd/money/application.go:67","func":"main.(*Application).init","level":"info","msg":"\n Log set \n","time":"2019-01-03T02:18:06-05:00"}
-{"file":"/Users/moh/go/src/github.com/mohfunk/money/cmd/money/application.go:42","func":"main.(*Application).info","level":"info","msg":"app info registered","time":"2019-01-03T02:18:06-05:00"}
-{"file":"/Users/moh/go/src/github.com/mohfunk/money/cmd/money/application.go:27","func":"main.(*Application).action","level":"info","msg":"App action executed","time":"2019-01-03T02:18:06-05:00"}
-{"file":"/Users/moh/go/src/github.com/mohfunk/money/cmd/money/application.go:78","func":"main.(*Application).run","level":"info","msg":"app running","time":"2019-01-03T02:18:06-05:00"}
