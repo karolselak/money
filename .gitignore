@@ -31,3 +31,6 @@ log.json
 
 ### justfile ###
 justfile
+
+### todos ###
+.todos.json
