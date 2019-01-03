@@ -38,7 +38,7 @@ func (a *Application) executeAction() error {
 			"error": err,
 		}).Fatal("Unmarshal assets file failed")
 	}
-	fmt.Print(a.wealth)
+	fmt.Println(*a.wealth)
 	return nil
 }
 

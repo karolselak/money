@@ -12,6 +12,6 @@ func Unmarshal(bytes []byte, v interface{}) error {
 }
 
 func Marshal(v interface{}) ([]byte, error) {
-	bytes, err := j.Marshal(&v)
+	bytes, err := j.Marshal(v)
 	return bytes, err
 }
