@@ -4,7 +4,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/mohfunk/money/cmd/money/worth"
+	"github.com/mohfunk/money/internal/worth"
 	"github.com/mohfunk/money/pkg/data"
 	"github.com/mohfunk/money/pkg/util"
 	log "github.com/sirupsen/logrus"

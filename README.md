@@ -1,45 +1,46 @@
 # `Money`
-
-Tracks your networth
+Manage your finances from the terminal
 ![alt-text](./.img.png)
 
 ## Install
+you need to have go installed, please refer to [Download
+Go](https://golang.org/dl)   
 
+To install `money`:
 ```bash
-$ go get -u github.com/mohfunk/networth
+$ go get -u github.com/mohfunk/money
+```
+
+## Usage
+```bash
+$ money <command> <args ...>
 ```
 
 ## Commands
 
-### Usage
-```bash
-$ networth <command> <args ...>
-
-```
-#### list
+### list
 Lists all your assets
 ```bash
-$ networth list # or networth l 
+$ money list # or money l 
 ```
 
-#### add
+### add
 Adds an asset
 ```bash
-$ networth add <Symbol> <Name> # or networth a
+$ money add <Symbol> <Name> # or networth a
 
 # Example
-$ networth add BTC bitcoin
-
+$ money add BTC bitcoin
 ```
 
-#### modify
+### modify
 ```bash
 #                           +/-
-$ networth modify <Symbol> <Sign> <Quantity> # or networth mod/m
+$ money modify <Symbol> <Sign> <Quantity> # or networth mod/m
 
 # Example
-$ networth m BTC + 2.3
-$ networth m DCR - 14
+$ money m BTC + 2.3
+$ money m DCR - 14
 ```
 Modify your holdings.
 
