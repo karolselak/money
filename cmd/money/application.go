@@ -11,8 +11,10 @@ import (
 )
 
 type Application struct {
-	app *cli.App
-	log *logrus.Logger
+	app    *cli.App
+	log    *logrus.Logger
+	config *Config
+	wealth *Wealth
 }
 
 func dummaction() error {
@@ -63,6 +65,7 @@ func (a *Application) setLog() {
 func (a *Application) init() {
 	a.app = cli.NewApp()
 	a.log = logrus.New()
+	a.config.configure()
 	a.setLog()
 	a.log.Info("\n Log set \n")
 	a.info()
