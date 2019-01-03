@@ -13,6 +13,10 @@ type Config struct {
 	dataFile string
 }
 
+func NewConfig() *Config {
+	return &Config{}
+}
+
 func (c *Config) configure() {
 	usr, _ := user.Current()
 	dir := usr.HomeDir

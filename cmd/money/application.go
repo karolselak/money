@@ -6,6 +6,7 @@ import (
 	"os"
 	"time"
 
+	"github.com/mohfunk/money/pkg/util"
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 )
@@ -17,14 +18,33 @@ type Application struct {
 	wealth *Wealth
 }
 
-func dummaction() error {
-	fmt.Println("boom! I say!")
+func (a *Application) executeAction() error {
+	wfile, err := util.Open(a.config.dataFile)
+	if err != nil {
+		a.log.WithFields(logrus.Fields{
+			"error": err,
+		}).Fatal("Opening assets file failed")
+	}
+	defer util.Close(wfile)
+	wbytes, err := util.Read(wfile)
+	if err != nil {
+		a.log.WithFields(logrus.Fields{
+			"error": err,
+		}).Fatal("Reading assets file failed")
+	}
+	err = util.Unmarshal(wbytes, a.wealth)
+	if err != nil {
+		a.log.WithFields(logrus.Fields{
+			"error": err,
+		}).Fatal("Unmarshal assets file failed")
+	}
+	fmt.Print(a.wealth)
 	return nil
 }
 
 func (a *Application) action() {
 	a.app.Action = func(c *cli.Context) error {
-		return dummaction()
+		return a.executeAction()
 	}
 	a.log.Info("App action executed")
 }
@@ -65,7 +85,9 @@ func (a *Application) setLog() {
 func (a *Application) init() {
 	a.app = cli.NewApp()
 	a.log = logrus.New()
+	a.config = NewConfig()
 	a.config.configure()
+	a.wealth = NewWealth()
 	a.setLog()
 	a.log.Info("\n Log set \n")
 	a.info()

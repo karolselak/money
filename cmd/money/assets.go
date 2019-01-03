@@ -13,3 +13,7 @@ type Asset struct {
 	Symbol  string  `json:"symbol"`
 	Holding float64 `json:"holding"`
 }
+
+func NewWealth() *Wealth {
+	return &Wealth{}
+}
