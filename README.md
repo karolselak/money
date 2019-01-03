@@ -1,6 +1,6 @@
 # `Money`
 Manage your finances from the terminal   
-![alt-text](./.img.png)
+![alt-text](./.i.png)
 
 ## Install
 you need to have go installed, please refer to [Download
@@ -43,5 +43,6 @@ $ money m BTC + 2.3
 $ money m DCR - 14
 ```
 Modify your holdings.
+
 
 
