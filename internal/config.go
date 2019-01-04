@@ -1,4 +1,4 @@
-package main
+package money
 
 import (
 	"os"
@@ -9,25 +9,25 @@ import (
 )
 
 type Config struct {
-	dataDir  string
-	dataFile string
+	DataDir  string
+	DataFile string
 }
 
 func NewConfig() *Config {
 	return &Config{}
 }
 
-func (c *Config) configure() {
+func (c *Config) Configure() {
 	usr, _ := user.Current()
 	dir := usr.HomeDir
 	ddir := filepath.Join(dir, ".money")
 	jfile := filepath.Join(ddir, "assets.json")
-	bjfile := filepath.Join(dir, "go/src/github.com/mohfunk/money/assets/assets.json")
+	bjfile := filepath.Join(dir, "go/src/github.com/mohfunk/money/base/assets.json")
 
-	c.dataDir = ddir
-	c.dataFile = jfile
-	if _, err := os.Stat(c.dataDir); os.IsNotExist(err) {
-		os.Mkdir(c.dataDir, 0700)
+	c.DataDir = ddir
+	c.DataFile = jfile
+	if _, err := os.Stat(c.DataDir); os.IsNotExist(err) {
+		os.Mkdir(c.DataDir, 0700)
 		util.Copy(bjfile, jfile)
 	}
 }

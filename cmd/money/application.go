@@ -5,6 +5,8 @@ import (
 	"os"
 	"time"
 
+	money "github.com/mohfunk/money/internal"
+	base "github.com/mohfunk/money/internal/base"
 	"github.com/mohfunk/money/pkg/util"
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
@@ -13,12 +15,12 @@ import (
 type Application struct {
 	app    *cli.App
 	log    *logrus.Logger
-	config *Config
-	wealth *Wealth
+	config *money.Config
+	wealth *money.Wealth
 }
 
 func (a *Application) executeAction() error {
-	wfile, err := util.Open(a.config.dataFile)
+	wfile, err := util.Open(a.config.DataFile)
 	if err != nil {
 		a.log.WithFields(logrus.Fields{
 			"error": err,
@@ -37,7 +39,7 @@ func (a *Application) executeAction() error {
 			"error": err,
 		}).Fatal("Unmarshal assets file failed")
 	}
-	list(a.wealth)
+	base.List(a.wealth)
 	return nil
 }
 
@@ -84,9 +86,9 @@ func (a *Application) setLog() {
 func (a *Application) init() {
 	a.app = cli.NewApp()
 	a.log = logrus.New()
-	a.config = NewConfig()
-	a.config.configure()
-	a.wealth = NewWealth()
+	a.config = money.NewConfig()
+	a.config.Configure()
+	a.wealth = money.NewWealth()
 	a.setLog()
 	a.log.Info("\n Log set \n")
 	a.info()

@@ -1,12 +1,13 @@
-package main
+package base
 
 import (
 	"fmt"
 
+	money "github.com/mohfunk/money/internal"
 	"github.com/mohfunk/money/pkg/util"
 )
 
-func list(w *Wealth) error {
+func List(w *money.Wealth) error {
 	var sum float64
 	var data [][]string
 	var hold float64
@@ -23,7 +24,7 @@ func list(w *Wealth) error {
 			data[ind] = append(data[ind], w.Wealth[i].Assets[j].Symbol)
 			hold = w.Wealth[i].Assets[j].Holding
 			if w.Wealth[i].Type == "Crypto" {
-				price = util.GetPrice(w.Wealth[i].Assets[j].Symbol)
+				price = util.GetPriceV2(w.Wealth[i].Assets[j].Name)
 			} else {
 				price = 1
 			}

@@ -1,4 +1,4 @@
-package main
+package base
 
 import (
 	"fmt"
@@ -18,7 +18,7 @@ func prnt(data [][]string, sum float64) {
 	d := fmt.Sprintf("%f", sum)
 	table.SetFooter([]string{"", "Total", d})
 	table.SetBorder(false)
-	table.SetAlignment(tablewriter.ALIGN_CENTER)
+	table.SetAlignment(tablewriter.ALIGN_LEFT)
 	table.SetHeaderColor(
 		tablewriter.Colors{tablewriter.Bold, tablewriter.FgYellowColor},
 		tablewriter.Colors{tablewriter.Bold, tablewriter.FgYellowColor},

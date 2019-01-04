@@ -1,4 +1,4 @@
-package main
+package money
 
 // Wealth an object containing assets
 type Wealth struct {
