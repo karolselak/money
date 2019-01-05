@@ -5,6 +5,8 @@ type Wealth struct {
 	Wealth []Assets `json:"wealth"`
 	Worth  float64  `json:"worth"`
 }
+
+// Assets contain an arrah of type Asset and a catgorie
 type Assets struct {
 	Type   string  `json:"type"`
 	Assets []Asset `json:"assets"`
@@ -18,6 +20,7 @@ type Asset struct {
 	Worth   float64 `json:"worth"`
 }
 
+// NewWealth returns a pointer to an empty Wealth struct
 func NewWealth() *Wealth {
 	return &Wealth{}
 }

@@ -11,6 +11,7 @@ import (
 	"github.com/urfave/cli"
 )
 
+// List command prints all assets
 func List(w *money.Wealth, log *logrus.Logger, c *cli.Context) (bool, error) {
 	listFiat(w)
 	listCrypto(w)
@@ -48,6 +49,8 @@ func listCrypto(w *money.Wealth) {
 	prnt(data, "Cryptocurrencies")
 	prntTotal(fmt.Sprintf("%9.3f", sum))
 }
+
+// Update command fetches prices and rates
 func Update(w *money.Wealth, log *logrus.Logger, c *cli.Context) (bool, error) {
 	var sum float64
 	var hold float64
@@ -61,7 +64,7 @@ func Update(w *money.Wealth, log *logrus.Logger, c *cli.Context) (bool, error) {
 	for i := 0; i < ln; i++ {
 		ch = append(ch, make(chan float64, 1))
 		sym = w.Wealth[1].Assets[i].Name
-		go cmcApi(sym, ch[i])
+		go cmcAPI(sym, ch[i])
 	}
 
 	for i := 0; i < ln; i++ {
@@ -94,6 +97,7 @@ func Update(w *money.Wealth, log *logrus.Logger, c *cli.Context) (bool, error) {
 	return true, nil
 }
 
+// Add creates a new Asset type
 func Add(w *money.Wealth, log *logrus.Logger, c *cli.Context) (bool, error) {
 	name := c.Args().Get(0)
 	sym := c.Args().Get(1)
@@ -111,6 +115,7 @@ func Add(w *money.Wealth, log *logrus.Logger, c *cli.Context) (bool, error) {
 	return Update(w, log, c)
 }
 
+// Modify changes the Asset.Holding filed of a given Asset
 func Modify(w *money.Wealth, log *logrus.Logger, c *cli.Context) (bool, error) {
 
 	syml := c.Args().Get(0)
@@ -135,7 +140,7 @@ func Modify(w *money.Wealth, log *logrus.Logger, c *cli.Context) (bool, error) {
 	return Update(w, log, c)
 }
 
-func cmcApi(sym string, c chan float64) {
+func cmcAPI(sym string, c chan float64) {
 	c <- util.GetPrice(sym)
 	time.Sleep(time.Millisecond * 100)
 }

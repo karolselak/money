@@ -11,6 +11,7 @@ import (
 	"github.com/urfave/cli"
 )
 
+// Application holds all relevant structs to the main application
 type Application struct {
 	app    *cli.App
 	cmd    *[]Command

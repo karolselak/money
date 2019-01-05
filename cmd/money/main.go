@@ -1,7 +1,7 @@
 package main
 
 func main() {
-	var app *Application = &Application{}
+	app := &Application{}
 	app.init()
 	app.run()
 }

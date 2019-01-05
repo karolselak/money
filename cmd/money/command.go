@@ -7,12 +7,14 @@ import (
 	"github.com/urfave/cli"
 )
 
+// ICommand interface define the 3 basic function signtures for Commands
 type ICommand interface {
 	info(string, string, []string)
 	action()
 	execute(*cli.Context) error
 }
 
+// Command is a wraps cli.Command with useful structs and data
 type Command struct {
 	cmd cli.Command
 	act money.Fn

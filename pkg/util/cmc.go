@@ -8,7 +8,7 @@ import (
 	cmc "github.com/cryptocurrencyfund/go-coinmarketcap"
 )
 
-// getPrice fetches the price of a currency
+// GetPrice fetches the price of a currency
 func GetPrice(sym string) float64 {
 	price, err := cmc.GetCoinPriceUsd(sym)
 	if err != nil {
@@ -17,6 +17,7 @@ func GetPrice(sym string) float64 {
 	return price
 }
 
+// GetPriceV2 scrapes coinmarketcap.com to fetch prices
 func GetPriceV2(name string) float64 {
 	url := "https://coinmarketcap.com/currencies/" + name
 	resp, err := soup.Get(url)

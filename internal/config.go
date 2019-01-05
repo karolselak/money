@@ -8,16 +8,19 @@ import (
 	"github.com/mohfunk/money/pkg/util"
 )
 
+// Config contains important data paths
 type Config struct {
 	DataDir  string
 	DataFile string
 	LogFile  string
 }
 
+// NewConfig returns a pointer to an empty Config struct
 func NewConfig() *Config {
 	return &Config{}
 }
 
+// Configure initilizes the app's Config struct, creates the neccassary dirctories and files
 func (c *Config) Configure() {
 	usr, _ := user.Current()
 	dir := usr.HomeDir

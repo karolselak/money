@@ -7,6 +7,7 @@ import (
 	"github.com/shopspring/decimal"
 )
 
+// Convert provides currency conversion
 func Convert(from, to string, amount float64) float64 {
 	f := gocurrency.NewCurrency(from)
 	t := gocurrency.NewCurrency(to)
