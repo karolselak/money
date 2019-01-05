@@ -109,9 +109,18 @@ func (a *Application) register() *[]Command {
 	add.action()
 	add.log.Info("add action registered")
 
-	c := &[]Command{*list, *update, *add}
+	mod := a.cmdbasic()
+	mod.log.Info("mod command registering, resources passed!")
+	mod.act = base.Modify
+	mod.log.Info("mod command base.Update registered")
+	mod.info("mod", "mod an asset", []string{"mod", "m"})
+	mod.log.Info("mod info registered")
+	mod.action()
+	mod.log.Info("mod action registered")
+
+	c := &[]Command{*list, *update, *add, *mod}
 	a.log.Info("Commands registered")
-	a.app.Commands = cli.Commands{list.cmd, update.cmd, add.cmd}
+	a.app.Commands = cli.Commands{list.cmd, update.cmd, add.cmd, mod.cmd}
 	a.log.Info("cli.Commands registered")
 	return c
 }

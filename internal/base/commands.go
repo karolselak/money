@@ -1,6 +1,7 @@
 package base
 
 import (
+	"errors"
 	"fmt"
 	"time"
 
@@ -95,7 +96,31 @@ func Add(w *money.Wealth, log *logrus.Logger, c *cli.Context) (bool, error) {
 	}
 	w.Wealth[1].Assets = append(w.Wealth[1].Assets, a)
 	println("Asset %s Added!", a.Symbol)
-	return true, nil
+	return Update(w, log, c)
+}
+
+func Modify(w *money.Wealth, log *logrus.Logger, c *cli.Context) (bool, error) {
+
+	syml := c.Args().Get(0)
+	sign := c.Args().Get(1)
+	amnt := c.Args().Get(2)
+
+	var sym string
+	for i := 0; i < 2; i++ {
+		for j := 0; j < len(w.Wealth[i].Assets); j++ {
+			sym = w.Wealth[i].Assets[j].Symbol
+			if sym == syml {
+				if sign == "+" {
+					w.Wealth[i].Assets[j].Holding += util.Stf(amnt)
+				} else if sign == "-" {
+					w.Wealth[i].Assets[j].Holding -= util.Stf(amnt)
+				} else {
+					return false, errors.New("wrong sign")
+				}
+			}
+		}
+	}
+	return Update(w, log, c)
 }
 
 func cmcApi(sym string, c chan float64) {
