@@ -76,7 +76,13 @@ func (c *Command) execute(cntxt *cli.Context) error {
 
 	// call the the command's function on the given interface
 	wrt, err = c.act(c.w, c.log, cntxt)
-
+	if err != nil {
+		c.log.WithFields(logrus.Fields{
+			"Command": c.cmd.Name,
+			"json":    *c.w,
+			"write":   wrt,
+		}).Fatal("Command Action failed")
+	}
 	c.log.WithFields(logrus.Fields{
 		"Command": c.cmd.Name,
 		"json":    *c.w,
