@@ -27,7 +27,7 @@ func (a *Application) info() {
 	a.app.Compiled = time.Now()
 	a.app.Copyright = "(c) MIT 2019"
 	a.app.Authors = []cli.Author{
-		cli.Author{
+		{
 			Name:  "Mohammed Alhaythm",
 			Email: "moh@abstractum.io",
 		},
