@@ -5,16 +5,12 @@ import (
 	"os"
 
 	"github.com/anaskhan96/soup"
-	cmc "github.com/coincircle/go-coinmarketcap"
+	cmc "github.com/cryptocurrencyfund/go-coinmarketcap"
 )
 
 // getPrice fetches the price of a currency
 func GetPrice(sym string) float64 {
-
-	price, err := cmc.Price(&cmc.PriceOptions{
-		Symbol:  sym,
-		Convert: "USD",
-	})
+	price, err := cmc.GetCoinPriceUsd(sym)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -29,6 +25,7 @@ func GetPriceV2(name string) float64 {
 	}
 	doc := soup.HTMLParse(resp)
 	ptext := doc.Find("div", "class", "details-panel-item--price").Find("span", "class", "details-panel-item--price__value")
+	println(ptext.Text())
 	price := Stf(ptext.Text())
 	return price
 }

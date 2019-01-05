@@ -5,7 +5,7 @@
             "type":"Fiat",
             "assets":
             [
-                { "name": "us-dollar", "symbol": "USD", "holding": 0.0, "worth": 0.0 }
+                { "name": "ca-dollar", "symbol": "CAD", "holding": 0.0, "worth": 0.0 }
             ]
         },
         {

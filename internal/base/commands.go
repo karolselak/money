@@ -60,17 +60,26 @@ func Update(w *money.Wealth, log *logrus.Logger, c *cli.Context) (bool, error) {
 
 	for i := 0; i < ln; i++ {
 		ch = append(ch, make(chan float64, 1))
-		sym = w.Wealth[1].Assets[i].Symbol
+		sym = w.Wealth[1].Assets[i].Name
 		go cmcApi(sym, ch[i])
 	}
 
 	for i := 0; i < ln; i++ {
 
-		hold = w.Wealth[1].Assets[i].Holding
+		log.WithFields(logrus.Fields{
+			"index":  i,
+			"wealth": w.Worth,
+			"price":  p,
+		}).Info("getting price")
 		p = <-ch[i]
+		hold = w.Wealth[1].Assets[i].Holding
 		wor = p * hold
 		w.Wealth[1].Assets[i].Worth = wor
 	}
+	log.WithFields(logrus.Fields{
+		"woryh":  wor,
+		"wealth": w.Worth,
+	}).Info(" worth")
 
 	hold = w.Wealth[0].Assets[0].Holding
 	w.Wealth[0].Assets[0].Worth = hold * 0.75
@@ -88,11 +97,14 @@ func Update(w *money.Wealth, log *logrus.Logger, c *cli.Context) (bool, error) {
 func Add(w *money.Wealth, log *logrus.Logger, c *cli.Context) (bool, error) {
 	name := c.Args().Get(0)
 	sym := c.Args().Get(1)
+	amnt := util.Stf(c.Args().Get(2))
+	pr := util.GetPriceV2(name)
+	wor := pr * amnt
 	a := money.Asset{
 		Name:    name,
 		Symbol:  sym,
-		Holding: 0.0,
-		Worth:   0.0,
+		Holding: amnt,
+		Worth:   wor,
 	}
 	w.Wealth[1].Assets = append(w.Wealth[1].Assets, a)
 	println("Asset %s Added!", a.Symbol)
