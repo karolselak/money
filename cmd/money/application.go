@@ -6,48 +6,17 @@ import (
 	"time"
 
 	money "github.com/mohfunk/money/internal"
-	base "github.com/mohfunk/money/internal/base"
-	"github.com/mohfunk/money/pkg/util"
+	"github.com/mohfunk/money/internal/base"
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 )
 
 type Application struct {
 	app    *cli.App
+	cmd    *[]Command
 	log    *logrus.Logger
 	config *money.Config
 	wealth *money.Wealth
-}
-
-func (a *Application) executeAction() error {
-	wfile, err := util.Open(a.config.DataFile)
-	if err != nil {
-		a.log.WithFields(logrus.Fields{
-			"error": err,
-		}).Fatal("Opening assets file failed")
-	}
-	defer util.Close(wfile)
-	wbytes, err := util.Read(wfile)
-	if err != nil {
-		a.log.WithFields(logrus.Fields{
-			"error": err,
-		}).Fatal("Reading assets file failed")
-	}
-	err = util.Unmarshal(wbytes, a.wealth)
-	if err != nil {
-		a.log.WithFields(logrus.Fields{
-			"error": err,
-		}).Fatal("Unmarshal assets file failed")
-	}
-	base.List(a.wealth)
-	return nil
-}
-
-func (a *Application) action() {
-	a.app.Action = func(c *cli.Context) error {
-		return a.executeAction()
-	}
-	a.log.Info("App action executed")
 }
 
 func (a *Application) info() {
@@ -69,12 +38,12 @@ func (a *Application) setLog() {
 	a.log.SetFormatter(&logrus.JSONFormatter{})
 	a.log.SetReportCaller(true)
 	a.log.Out = os.Stdout
-	f, err := os.OpenFile("log.json", os.O_CREATE|os.O_WRONLY, 0666)
+	f, err := os.OpenFile(a.config.LogFile, os.O_CREATE|os.O_WRONLY, 0666)
 	_ = f
 	if err != nil {
 		a.log.Error("Cannot create file .log, logging to stderr instead")
 	} else {
-		file, err := os.OpenFile("log.json", os.O_APPEND|os.O_WRONLY, 0666)
+		file, err := os.OpenFile(a.config.LogFile, os.O_APPEND|os.O_WRONLY, 0666)
 		if err != nil {
 			a.log.Info("failed to log to file .log, logging to stderr instead")
 		} else {
@@ -92,7 +61,7 @@ func (a *Application) init() {
 	a.setLog()
 	a.log.Info("\n Log set \n")
 	a.info()
-	a.action()
+	a.cmd = a.register()
 }
 
 func (a *Application) run() {
@@ -102,4 +71,22 @@ func (a *Application) run() {
 		log.Fatal(err)
 	}
 	a.log.Info("app running")
+}
+
+func (a *Application) cmdbasic() *Command {
+	c := &Command{}
+	c.w = a.wealth
+	c.fp = a.config.DataFile
+	c.log = a.log
+
+	return c
+}
+func (a *Application) register() *[]Command {
+	list := a.cmdbasic()
+	list.act = base.List
+	list.info("list", "lists all assets", []string{"ls", "l"})
+	list.action()
+	c := &[]Command{*list}
+	a.app.Commands = cli.Commands{list.cmd}
+	return c
 }

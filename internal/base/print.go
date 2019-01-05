@@ -1,13 +1,12 @@
 package base
 
 import (
-	"fmt"
 	"os"
 
 	"github.com/olekukonko/tablewriter"
 )
 
-func prnt(data [][]string, sum float64) {
+func prnt(data [][]string, cap string) {
 	println()
 	table := tablewriter.NewWriter(os.Stdout)
 	table.SetHeader([]string{"Asset", "Holding", "Worth"})
@@ -15,9 +14,8 @@ func prnt(data [][]string, sum float64) {
 	for _, v := range data {
 		table.Append(v)
 	}
-	d := fmt.Sprintf("%f", sum)
-	table.SetFooter([]string{"", "Total", d})
-	table.SetBorder(false)
+	table.SetBorder(true)
+	table.SetCaption(true, cap)
 	table.SetAlignment(tablewriter.ALIGN_LEFT)
 	table.SetHeaderColor(
 		tablewriter.Colors{tablewriter.Bold, tablewriter.FgYellowColor},
@@ -27,12 +25,8 @@ func prnt(data [][]string, sum float64) {
 	table.SetColumnColor(
 		tablewriter.Colors{tablewriter.Bold, tablewriter.FgHiBlackColor},
 		tablewriter.Colors{tablewriter.Bold, tablewriter.FgHiRedColor},
-		tablewriter.Colors{tablewriter.Bold, tablewriter.FgHiBlueColor})
+		tablewriter.Colors{tablewriter.Bold, tablewriter.FgHiCyanColor})
 
-	table.SetFooterColor(
-		tablewriter.Colors{},
-		tablewriter.Colors{tablewriter.Bold, tablewriter.FgYellowColor},
-		tablewriter.Colors{tablewriter.FgHiGreenColor})
 	table.Render() // Send output
 	println()
 }

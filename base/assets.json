@@ -5,26 +5,17 @@
             "type":"Fiat",
             "assets":
             [
-                { "name": "us-dollar", "symbol": "USD", "holding": 1.0 },
-                { "name": "ca-dollar", "symbol": "CAD", "holding": 1.0 }
+                { "name": "us-dollar", "symbol": "USD", "holding": 0.0, "worth": 0.0 }
             ]
         },
         {
             "type":"Crypto",
             "assets":
             [
-                { "name": "bitcoin", "symbol": "BTC", "holding": 0.17 },
-                { "name": "bitcoin-cash", "symbol": "BCH", "holding": 1.0 }
-            ]
-        },
-
-        {
-            "type":"Metals",
-            "assets":
-            [
-                { "name": "gold", "symbol": "GLD", "holding": 0.1 },
-                { "name": "silver", "symbol": "SLV", "holding": 1.0 }
+                { "name": "bitcoin", "symbol": "BTC", "holding": 0.0, "worth": 0.0 }
             ]
         }
-    ]
+
+    ],
+    "worth": 8500
 }
