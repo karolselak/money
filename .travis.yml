@@ -1,0 +1,19 @@
+language: go
+
+
+go:
+  - "1.11.4"
+
+
+go_import_path: github.com/mohfunk/pkg/util
+go_import_path: github.com/mohfunk/internal
+go_import_path: github.com/mohfunk/internal/base
+go_import_path: github.com/sirupsen/logrus
+go_import_path: github.com/olekukonko/tablewriter
+go_import_path: github.com/cryptocurrencyfund/go-coinmarketcap
+go_import_path: github.com/disiqueira/gocurrency
+go_import_path: github.com/shopspring/decimal
+go_import_path: github.com/anaskhan96/soup
+
+	
+	
