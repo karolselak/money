@@ -12,6 +12,7 @@
             "type":"Crypto",
             "assets":
             [
+                { "name": "bitcoin", "symbol": "BTC", "holding": 0.0, "worth": 0.0 },
                 { "name": "bitcoin", "symbol": "BTC", "holding": 0.0, "worth": 0.0 }
             ]
         }

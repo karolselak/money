@@ -59,7 +59,7 @@ func (a *Application) init() {
 	a.config.Configure()
 	a.wealth = money.NewWealth()
 	a.setLog()
-	a.log.Info("\n Log set \n")
+	a.log.Info(" Log set ")
 	a.info()
 	a.cmd = a.register()
 }
@@ -83,16 +83,35 @@ func (a *Application) cmdbasic() *Command {
 }
 func (a *Application) register() *[]Command {
 	list := a.cmdbasic()
+	list.log.Info("list command registering, resources passed!")
 	list.act = base.List
+	list.log.Info("List command base.List registered")
 	list.info("list", "lists all assets", []string{"ls", "l"})
+	list.log.Info("List command base.List registered")
 	list.action()
+	list.log.Info("List command base.List registered")
 
 	update := a.cmdbasic()
+	update.log.Info("update command registering, resources passed!")
 	update.act = base.Update
+	update.log.Info("update command base.Update registered")
 	update.info("update", "fetch prices and update", []string{"up", "u"})
+	update.log.Info("update info registered")
 	update.action()
+	update.log.Info("update action registered")
 
-	c := &[]Command{*list, *update}
-	a.app.Commands = cli.Commands{list.cmd, update.cmd}
+	add := a.cmdbasic()
+	add.log.Info("add command registering, resources passed!")
+	add.act = base.Add
+	add.log.Info("add command base.Update registered")
+	add.info("add", "add an asset", []string{"ad", "a"})
+	add.log.Info("add info registered")
+	add.action()
+	add.log.Info("add action registered")
+
+	c := &[]Command{*list, *update, *add}
+	a.log.Info("Commands registered")
+	a.app.Commands = cli.Commands{list.cmd, update.cmd, add.cmd}
+	a.log.Info("cli.Commands registered")
 	return c
 }
