@@ -1,4 +1,4 @@
-[![Go Report Card](https://goreportcard.com/badge/mohfunk/money)](https://goreportcard.com/report/mohfunk/money)
+[![Go Report Card](https://goreportcard.com/badge/mohfunk/money)](https://goreportcard.com/report/mohfunk/money) [![GoDoc](https://godoc.org/github.com/mohfunk/money?status.svg)](https://godoc.org/github.com/mohfunk/money)
 # `Money`
 Manage your finances from the terminal   
 ![alt-text](./.i.png)
