@@ -86,7 +86,13 @@ func (a *Application) register() *[]Command {
 	list.act = base.List
 	list.info("list", "lists all assets", []string{"ls", "l"})
 	list.action()
-	c := &[]Command{*list}
-	a.app.Commands = cli.Commands{list.cmd}
+
+	update := a.cmdbasic()
+	update.act = base.Update
+	update.info("update", "fetch prices and update", []string{"up", "u"})
+	update.action()
+
+	c := &[]Command{*list, *update}
+	a.app.Commands = cli.Commands{list.cmd, update.cmd}
 	return c
 }

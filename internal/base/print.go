@@ -30,3 +30,20 @@ func prnt(data [][]string, cap string) {
 	table.Render() // Send output
 	println()
 }
+
+func prntTotal(sum string) {
+
+	println()
+	table := tablewriter.NewWriter(os.Stdout)
+	table.SetHeader([]string{"Total"})
+	table.Append([]string{sum})
+	table.SetBorder(true)
+	table.SetAlignment(tablewriter.ALIGN_LEFT)
+	table.SetHeaderColor(
+		tablewriter.Colors{tablewriter.Bold, tablewriter.FgYellowColor})
+	table.SetColumnColor(
+		tablewriter.Colors{tablewriter.Bold, tablewriter.FgHiGreenColor})
+
+	table.Render() // Send output
+	println()
+}

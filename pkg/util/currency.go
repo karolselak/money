@@ -1,6 +1,8 @@
 package util
 
 import (
+	"fmt"
+
 	"github.com/disiqueira/gocurrency"
 	"github.com/shopspring/decimal"
 )
@@ -10,6 +12,8 @@ func Convert(from, to string, amount float64) float64 {
 	t := gocurrency.NewCurrency(to)
 	amt := decimal.NewFromFloat(amount)
 	conv, _ := gocurrency.ConvertCurrency(f, t, amt)
+	fmt.Println(conv)
 	flt, _ := conv.Float64()
+	println(flt)
 	return flt
 }
