@@ -102,7 +102,7 @@ func (c *Command) execute(cntxt *cli.Context) error {
 			"json":    *c.w,
 			"byte":    wbyte,
 			"file":    c.fp,
-		}).Info("Marshaling json success, writting now")
+		}).Info("Marshaling json success, writing now")
 		err = util.Write(wbyte, c.fp)
 		if err != nil {
 			c.log.WithFields(logrus.Fields{
