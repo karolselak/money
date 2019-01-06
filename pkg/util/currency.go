@@ -1,3 +1,6 @@
+// The MIT License (MIT)
+// Copyright (c) 2017 Arlex Martinez <@lexmartinez>
+// https://github.com/lexmartinez/go-currency-converter
 package util
 
 import (
