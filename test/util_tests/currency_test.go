@@ -1,6 +1,10 @@
-package util
+package utiltest
 
-import "testing"
+import (
+	"testing"
+
+	"github.com/mohfunk/money/pkg/util"
+)
 
 func TestConvert(t *testing.T) {
 	type args struct {
@@ -11,14 +15,18 @@ func TestConvert(t *testing.T) {
 	tests := []struct {
 		name string
 		args args
-		want float64
 	}{
-		// TODO: Add test cases.
+		{"usd->cad", args{"USD", "CAD", 10}},
+		{"usd->cad", args{"CAD", "USD", 10}},
+		{"usd->cad", args{"USD", "SAR", 10}},
+		{"usd->cad", args{"SAR", "USD", 10}},
+		{"usd->cad", args{"CAD", "SAR", 10}},
+		{"usd->cad", args{"SAR", "CAD", 10}},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := Convert(tt.args.from, tt.args.to, tt.args.amount); got != tt.want {
-				t.Errorf("Convert() = %v, want %v", got, tt.want)
+			if got := util.Convert(tt.args.from, tt.args.to, tt.args.amount); got == 0 {
+				t.Errorf("Convert() = %v, want %v", got, 0)
 			}
 		})
 	}
