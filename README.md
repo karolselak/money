@@ -14,7 +14,7 @@ $ go get -u github.com/mohfunk/money
 
 ## Usage
 ```bash
-$ money <command> <args ...>
+$ money -flags <command> <args ...>
 ```
 
 ## Commands
@@ -22,28 +22,52 @@ $ money <command> <args ...>
 ### list
 Lists all your assets
 ```bash
-$ money list # or money l 
+$ money ls
 ```
+**Alias** `$ money l`
 
-### add
-Adds an asset
+### ad
+Adds a new asset type
 ```bash
-$ money add <Symbol> <Name> # or networth a
-
-# Example
-$ money add BTC bitcoin
+#                                  optional    for metals 
+$ money ad -flags <name> <symbol> <quantity> <quantity unit>
 ```
+**Alias** `$ money a`
 
-### modify
+##### Flags
+| flags | function |
+|:-----:|:--------:|
+|  -f   | adds asset as a fiat currency |
+|  -c   | adds asset as a cryptocurrency |
+|  -m   | adds asset as a precious metal |
+
+##### Example
 ```bash
-#                           +/-
-$ money modify <Symbol> <Sign> <Quantity> # or networth mod/m
-
-# Example
-$ money m BTC + 2.3
-$ money m DCR - 14
+# Fiat Currencies
+$ money ad -f us-dollar USD
+$ money ad -f ca-dollar CAD 343.23
+# Cryptocurrencies
+$ money ad -c bitcoin BTC
+$ money ad -c cardano ADA 5356 
+# Precious Metals
+$ money ad -m gold SLV 999 g
+$ money ad -m gold GLD 0.5 kg
 ```
-Modify your holdings.
+
+### md
+Modifies holding quantity for an asset
+```bash
+#                       + or -
+$ money modify <symbol> <sign> <quantity>
+```
+**Alias** `$money m`
+
+##### Example
+```bash
+$ money m CAD + 25000
+$ money m BTC + 0.329
+$ money m SLV - 12 kg
+```
 
 
 

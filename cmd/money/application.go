@@ -87,7 +87,7 @@ func (a *Application) register() *[]Command {
 	list.log.Info("list command registering, resources passed!")
 	list.act = base.List
 	list.log.Info("List command base.List registered")
-	list.info("list", "lists all assets", []string{"ls", "l"})
+	list.info("ls", "lists all assets", []string{"l"})
 	list.log.Info("List command base.List registered")
 	list.action()
 	list.log.Info("List command base.List registered")
@@ -96,7 +96,7 @@ func (a *Application) register() *[]Command {
 	update.log.Info("update command registering, resources passed!")
 	update.act = base.Update
 	update.log.Info("update command base.Update registered")
-	update.info("update", "fetch prices and update", []string{"up", "u"})
+	update.info("up", "fetch prices and update", []string{"u"})
 	update.log.Info("update info registered")
 	update.action()
 	update.log.Info("update action registered")
@@ -105,7 +105,7 @@ func (a *Application) register() *[]Command {
 	add.log.Info("add command registering, resources passed!")
 	add.act = base.Add
 	add.log.Info("add command base.Update registered")
-	add.info("add", "add an asset", []string{"ad", "a"})
+	add.info("ad", "add an asset", []string{"a"})
 	add.log.Info("add info registered")
 	add.action()
 	add.log.Info("add action registered")
@@ -114,7 +114,7 @@ func (a *Application) register() *[]Command {
 	mod.log.Info("mod command registering, resources passed!")
 	mod.act = base.Modify
 	mod.log.Info("mod command base.Update registered")
-	mod.info("mod", "mod an asset", []string{"mod", "m"})
+	mod.info("md", "mod an asset", []string{"m"})
 	mod.log.Info("mod info registered")
 	mod.action()
 	mod.log.Info("mod action registered")
