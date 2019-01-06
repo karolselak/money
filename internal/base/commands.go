@@ -13,6 +13,7 @@ import (
 
 // List command prints all assets
 func List(w *money.Wealth, log *logrus.Logger, c *cli.Context) (bool, error) {
+	Update(w, log, c)
 	listFiat(w)
 	listCrypto(w)
 	prntTotal(fmt.Sprintf("%9.3f", w.Worth))

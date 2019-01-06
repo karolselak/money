@@ -41,8 +41,6 @@ func setHelpText() {
 }
 
 func main() {
-	c.SetColors()
-	setHelpText()
 	app := &Application{}
 	app.init()
 	app.run()
