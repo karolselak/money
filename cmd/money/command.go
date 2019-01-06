@@ -10,6 +10,7 @@ import (
 // ICommand interface define the 3 basic function signtures for Commands
 type ICommand interface {
 	info(string, string, []string)
+	flag(bool, ...string)
 	action()
 	execute(*cli.Context) error
 }
@@ -29,9 +30,21 @@ func (c *Command) info(n, usg string, ali []string) {
 	c.cmd.Name = n
 	c.cmd.Aliases = ali
 	c.cmd.Usage = usg
+	c.cmd.Usage = usg
 	c.log.Info("Command.info, names, done")
 }
-
+func (c *Command) flag(include bool, finfo ...string) {
+	if include == true {
+		f := []cli.Flag{
+			cli.StringFlag{
+				Name:  finfo[0],
+				Usage: finfo[1],
+				Value: finfo[2],
+			},
+		}
+		c.cmd.Flags = f
+	}
+}
 func (c *Command) action() {
 	c.log.Info("Command.action")
 	c.cmd.Action = func(cntxt *cli.Context) error {

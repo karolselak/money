@@ -33,6 +33,7 @@ func (a *Application) info() {
 		},
 	}
 	a.log.Info("app info registered")
+
 }
 
 func (a *Application) setLog() {
@@ -74,7 +75,7 @@ func (a *Application) run() {
 	a.log.Info("app running")
 }
 
-func (a *Application) cmdbasic() *Command {
+func (a *Application) passResources() *Command {
 	c := &Command{}
 	c.w = a.wealth
 	c.fp = a.config.DataFile
@@ -83,45 +84,28 @@ func (a *Application) cmdbasic() *Command {
 	return c
 }
 func (a *Application) register() *[]Command {
-	list := a.cmdbasic()
-	list.log.Info("list command registering, resources passed!")
-	list.act = base.List
-	list.log.Info("List command base.List registered")
-	list.info("ls", "lists all assets", []string{"l"})
-	list.log.Info("List command base.List registered")
-	list.action()
-	list.log.Info("List command base.List registered")
+	ls := a.passResources()
+	ad := a.passResources()
+	md := a.passResources()
 
-	update := a.cmdbasic()
-	update.log.Info("update command registering, resources passed!")
-	update.act = base.Update
-	update.log.Info("update command base.Update registered")
-	update.info("up", "fetch prices and update", []string{"u"})
-	update.log.Info("update info registered")
-	update.action()
-	update.log.Info("update action registered")
+	ls.act = base.List
+	ls.info("ls", "lists all assets", []string{"l"})
+	md.flag(false)
+	ls.action()
 
-	add := a.cmdbasic()
-	add.log.Info("add command registering, resources passed!")
-	add.act = base.Add
-	add.log.Info("add command base.Update registered")
-	add.info("ad", "add an asset", []string{"a"})
-	add.log.Info("add info registered")
-	add.action()
-	add.log.Info("add action registered")
+	ad.act = base.Add
+	ad.info("ad", "add an asset type", []string{"a"})
+	ad.flag(true, "type, t", "c", "specifies asset type")
+	ad.action()
 
-	mod := a.cmdbasic()
-	mod.log.Info("mod command registering, resources passed!")
-	mod.act = base.Modify
-	mod.log.Info("mod command base.Update registered")
-	mod.info("md", "mod an asset", []string{"m"})
-	mod.log.Info("mod info registered")
-	mod.action()
-	mod.log.Info("mod action registered")
+	md.act = base.Modify
+	md.info("md", "mod an asset", []string{"m"})
+	md.flag(false)
+	md.action()
 
-	c := &[]Command{*list, *update, *add, *mod}
+	c := &[]Command{*ls, *ad, *md}
 	a.log.Info("Commands registered")
-	a.app.Commands = cli.Commands{list.cmd, update.cmd, add.cmd, mod.cmd}
+	a.app.Commands = cli.Commands{ls.cmd, ad.cmd, md.cmd}
 	a.log.Info("cli.Commands registered")
 	return c
 }
