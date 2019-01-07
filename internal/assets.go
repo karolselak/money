@@ -22,12 +22,14 @@ type Asset struct {
 
 // Update sets struct fields to the most recent Prices
 func (w *Wealth) Update() {
+	var sym string
 	var sum float64
 	var hold float64
 	var wor float64
 	for i := 0; i < len(Prices); i++ {
+		sym = w.Wealth[1].Assets[i].Symbol
 		hold = w.Wealth[1].Assets[i].Holding
-		wor = hold * Prices[i]
+		wor = hold * Prices[sym]
 		w.Wealth[1].Assets[i].Worth = wor
 		sum += wor
 	}

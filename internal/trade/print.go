@@ -9,7 +9,7 @@ import (
 func prnt(data [][]string, cap string) {
 	println()
 	table := tablewriter.NewWriter(os.Stdout)
-	table.SetHeader([]string{"Asset", "Holding", "Worth"})
+	table.SetHeader([]string{"ID", "Pair", "Amount", "price"})
 
 	for _, v := range data {
 		table.Append(v)
@@ -20,11 +20,13 @@ func prnt(data [][]string, cap string) {
 	table.SetHeaderColor(
 		tablewriter.Colors{tablewriter.Bold, tablewriter.FgYellowColor},
 		tablewriter.Colors{tablewriter.Bold, tablewriter.FgYellowColor},
+		tablewriter.Colors{tablewriter.Bold, tablewriter.FgYellowColor},
 		tablewriter.Colors{tablewriter.Bold, tablewriter.FgYellowColor})
 
 	table.SetColumnColor(
 		tablewriter.Colors{tablewriter.Bold, tablewriter.FgHiBlackColor},
-		tablewriter.Colors{tablewriter.Bold, tablewriter.FgHiRedColor},
+		tablewriter.Colors{tablewriter.Bold, tablewriter.FgHiGreenColor},
+		tablewriter.Colors{tablewriter.Bold, tablewriter.FgHiBlueColor},
 		tablewriter.Colors{tablewriter.Bold, tablewriter.FgHiCyanColor})
 
 	table.Render() // Send output

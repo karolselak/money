@@ -17,20 +17,23 @@ type Resource interface {
 type Fn func(Resource, *logrus.Logger, *cli.Context) (bool, error)
 
 // Prices
-var Prices []float64
+var Prices map[string]float64
 var Currencies []string
+var Symbols []string
 
 // FetchPrices updates prices in Prices
 func FetchPrices() {
+	var p float64
 	var ch []chan float64
-	var p []float64
+	pr := make(map[string]float64)
 	ln := len(Currencies)
 	for i := 0; i < ln; i++ {
 		ch = append(ch, make(chan float64, 1))
 		go cmcAPI(Currencies[i], ch[i])
 	}
 	for i := 0; i < ln; i++ {
-		p = append(p, <-ch[i])
+		p = <-ch[i]
+		pr[Symbols[i]] = p
 	}
 }
 
