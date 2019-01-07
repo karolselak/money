@@ -27,20 +27,19 @@ type Tradec struct {
 }
 
 func (t *Trades) Update() {
-	var buy bool
-	var currcp float64
-	var currip float64
+	var csym string
+	var isym string
+	var ccurr float64
+	var iamnt float64
+	var icurr float64
 	var curr float64
 	for i := 0; i < len(t.Open); i++ {
-		buy = t.Open[i].Claim
-		if buy == true {
-			currcp = Prices[t.Open[i].Base]
-			currip = Prices[t.Open[i].Invs]
-		} else {
-			currcp = Prices[t.Open[i].Invs]
-			currip = Prices[t.Open[i].Base]
-		}
-		curr = currip / currcp
+		csym = t.Open[i].Base
+		isym = t.Open[i].Invs
+		iamnt = t.Open[i].Amount
+		ccurr = Prices[csym]
+		icurr = Prices[isym]
+		curr = ((icurr / ccurr) * iamnt)
 		t.Open[i].Current = curr
 	}
 }

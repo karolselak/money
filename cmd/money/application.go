@@ -128,6 +128,18 @@ func (a *Application) register() *[]Command {
 	ta.res = a.trades
 	ta.act = trade.Add
 
+	tc := &Command{}
+	tc.fp = a.config.TradeFile
+	tc.log = a.log
+	tc.res = a.trades
+	tc.act = trade.BList
+
+	tac := &Command{}
+	tac.fp = a.config.TradeFile
+	tac.log = a.log
+	tac.res = a.trades
+	tac.act = trade.Close
+
 	ls.info("ls", "lists all assets", []string{"l"})
 	ls.flag(false)
 	ls.action()
@@ -152,9 +164,17 @@ func (a *Application) register() *[]Command {
 	ta.flag(false)
 	ta.action()
 
-	c := &[]Command{*ls, *ad, *md, *tr, *tm, *ta}
+	tc.info("lsctr", "mod an asset", []string{"lc"})
+	tc.flag(false)
+	tc.action()
+
+	tac.info("tac", "mod an asset", []string{"tc"})
+	tac.flag(false)
+	tac.action()
+
+	c := &[]Command{*ls, *ad, *md, *tr, *tm, *ta, *tc, *tac}
 	a.log.Info("Commands registered")
-	a.app.Commands = cli.Commands{ls.cmd, ad.cmd, md.cmd, tr.cmd, tm.cmd, ta.cmd}
+	a.app.Commands = cli.Commands{ls.cmd, ad.cmd, md.cmd, tr.cmd, tm.cmd, ta.cmd, tc.cmd, tac.cmd}
 	a.log.Info("cli.Commands registered")
 	return c
 }

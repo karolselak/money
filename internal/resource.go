@@ -25,7 +25,7 @@ var Symbols []string
 func FetchPrices() {
 	var p float64
 	var ch []chan float64
-	pr := make(map[string]float64)
+	Prices = make(map[string]float64)
 	ln := len(Currencies)
 	for i := 0; i < ln; i++ {
 		ch = append(ch, make(chan float64, 1))
@@ -33,11 +33,11 @@ func FetchPrices() {
 	}
 	for i := 0; i < ln; i++ {
 		p = <-ch[i]
-		pr[Symbols[i]] = p
+		Prices[Symbols[i]] = p
 	}
 }
 
 func cmcAPI(sym string, c chan float64) {
 	c <- util.GetPrice(sym)
-	time.Sleep(time.Millisecond * 100)
+	time.Sleep(time.Millisecond * 250)
 }
