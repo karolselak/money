@@ -20,7 +20,18 @@ type Asset struct {
 	Worth   float64 `json:"worth"`
 }
 
-// NewWealth returns a pointer to an empty Wealth struct
-func NewWealth() *Wealth {
-	return &Wealth{}
+// Update sets struct fields to the most recent Prices
+func (w *Wealth) Update() {
+	var sum float64
+	var hold float64
+	var wor float64
+	for i := 0; i < len(Prices); i++ {
+		hold = w.Wealth[1].Assets[i].Holding
+		wor = hold * Prices[i]
+		w.Wealth[1].Assets[i].Worth = wor
+		sum += wor
+	}
+	hold = w.Wealth[0].Assets[0].Holding
+	sum += hold * 0.75
+	w.Worth = sum
 }

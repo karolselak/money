@@ -7,6 +7,7 @@ import (
 
 	money "github.com/mohfunk/money/internal"
 	"github.com/mohfunk/money/internal/base"
+	"github.com/mohfunk/money/pkg/util"
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
 )
@@ -17,7 +18,8 @@ type Application struct {
 	cmd    *[]Command
 	log    *logrus.Logger
 	config *money.Config
-	wealth *money.Wealth
+	wealth money.Resource
+	trades money.Resource
 }
 
 func (a *Application) info() {
@@ -59,11 +61,24 @@ func (a *Application) init() {
 	a.log = logrus.New()
 	a.config = money.NewConfig()
 	a.config.Configure()
-	a.wealth = money.NewWealth()
+	a.wealth = &money.Wealth{}
+	a.trades = &money.Trades{}
 	a.setLog()
 	a.log.Info(" Log set ")
 	a.info()
 	a.cmd = a.register()
+	file, err := util.Open(a.config.DataFile)
+	defer util.Close(file)
+	ibytes, err := util.Read(file)
+	w := &money.Wealth{}
+	err = util.Unmarshal(ibytes, w)
+	for i := 0; i < len(w.Wealth[1].Assets); i++ {
+		money.Currencies = append(money.Currencies, w.Wealth[1].Assets[i].Name)
+	}
+	money.FetchPrices()
+	if err != nil {
+		a.log.Fatal(err)
+	}
 }
 
 func (a *Application) run() {
@@ -74,31 +89,33 @@ func (a *Application) run() {
 	}
 	a.log.Info("app running")
 }
-
-func (a *Application) passResources() *Command {
-	c := &Command{}
-	c.w = a.wealth
-	c.fp = a.config.DataFile
-	c.log = a.log
-
-	return c
-}
 func (a *Application) register() *[]Command {
-	ls := a.passResources()
-	ad := a.passResources()
-	md := a.passResources()
-
+	ls := &Command{}
+	ls.fp = a.config.DataFile
+	ls.log = a.log
+	ls.res = a.wealth
 	ls.act = base.List
+
+	ad := &Command{}
+	ad.fp = a.config.DataFile
+	ad.log = a.log
+	ls.res = a.wealth
+	ad.act = base.Add
+
+	md := &Command{}
+	md.fp = a.config.DataFile
+	md.log = a.log
+	md.res = a.wealth
+	md.act = base.Modify
+
 	ls.info("ls", "lists all assets", []string{"l"})
 	md.flag(false)
 	ls.action()
 
-	ad.act = base.Add
 	ad.info("ad", "add an asset type", []string{"a"})
 	ad.flag(true, "type, t", "c", "specifies asset type")
 	ad.action()
 
-	md.act = base.Modify
 	md.info("md", "mod an asset", []string{"m"})
 	md.flag(false)
 	md.action()
