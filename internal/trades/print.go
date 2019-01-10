@@ -9,7 +9,7 @@ import (
 func prnt(data [][]string, cap string) {
 	println()
 	table := tablewriter.NewWriter(os.Stdout)
-	table.SetHeader([]string{"ID", "Pair", "Amount", "price"})
+	table.SetHeader([]string{"ID", "Pair", "Trade", "Prices", "Profit"})
 
 	for _, v := range data {
 		table.Append(v)
@@ -18,6 +18,7 @@ func prnt(data [][]string, cap string) {
 	table.SetCaption(true, cap)
 	table.SetAlignment(tablewriter.ALIGN_LEFT)
 	table.SetHeaderColor(
+		tablewriter.Colors{tablewriter.Bold, tablewriter.FgYellowColor},
 		tablewriter.Colors{tablewriter.Bold, tablewriter.FgYellowColor},
 		tablewriter.Colors{tablewriter.Bold, tablewriter.FgYellowColor},
 		tablewriter.Colors{tablewriter.Bold, tablewriter.FgYellowColor},
@@ -27,6 +28,7 @@ func prnt(data [][]string, cap string) {
 		tablewriter.Colors{tablewriter.Bold, tablewriter.FgHiBlackColor},
 		tablewriter.Colors{tablewriter.Bold, tablewriter.FgHiGreenColor},
 		tablewriter.Colors{tablewriter.Bold, tablewriter.FgHiBlueColor},
+		tablewriter.Colors{tablewriter.Bold, tablewriter.FgHiBlueColor},
 		tablewriter.Colors{tablewriter.Bold, tablewriter.FgHiCyanColor})
 
 	table.Render() // Send output
@@ -35,7 +37,7 @@ func prnt(data [][]string, cap string) {
 func prntc(data [][]string, cap string) {
 	println()
 	table := tablewriter.NewWriter(os.Stdout)
-	table.SetHeader([]string{"ID", "Pair", "Bought -> Sold", "percent"})
+	table.SetHeader([]string{"ID", "Pair", "Trade", "Bought | Sold", "Profit"})
 
 	for _, v := range data {
 		table.Append(v)
@@ -47,10 +49,12 @@ func prntc(data [][]string, cap string) {
 		tablewriter.Colors{tablewriter.Bold, tablewriter.FgYellowColor},
 		tablewriter.Colors{tablewriter.Bold, tablewriter.FgYellowColor},
 		tablewriter.Colors{tablewriter.Bold, tablewriter.FgYellowColor},
+		tablewriter.Colors{tablewriter.Bold, tablewriter.FgYellowColor},
 		tablewriter.Colors{tablewriter.Bold, tablewriter.FgYellowColor})
 
 	table.SetColumnColor(
 		tablewriter.Colors{tablewriter.Bold, tablewriter.FgHiBlackColor},
+		tablewriter.Colors{tablewriter.Bold, tablewriter.FgHiGreenColor},
 		tablewriter.Colors{tablewriter.Bold, tablewriter.FgHiGreenColor},
 		tablewriter.Colors{tablewriter.Bold, tablewriter.FgHiBlueColor},
 		tablewriter.Colors{tablewriter.Bold, tablewriter.FgHiCyanColor})

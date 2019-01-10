@@ -28,7 +28,7 @@ type Application struct {
 func (a *Application) info() {
 	a.app.Name = "money"
 	a.app.Usage = "track your finances"
-	a.app.Version = "0.0.6"
+	a.app.Version = "0.0.7"
 	a.app.Compiled = time.Now()
 	a.app.Copyright = "(c) MIT 2019"
 	a.app.Authors = []cli.Author{
@@ -128,26 +128,48 @@ func (a *Application) register() *[]Command {
 	ad := &Command{}
 	md := &Command{}
 	rm := &Command{}
+
 	ad.fp = a.config.DataFile
 	md.fp = a.config.DataFile
 	rm.fp = a.config.DataFile
+
 	ad.log = a.log
 	md.log = a.log
 	rm.log = a.log
+
 	ad.res = a.wealth
 	md.res = a.wealth
 	rm.res = a.wealth
+
 	ad.act = wealth.Add
 	ad.info("add", "add an asset type", []string{"a"})
 	ad.action()
+
 	md.act = wealth.Modify
-	md.info("modify", "mod an asset", []string{"m"})
+	md.info("modify", "modify an asset", []string{"m"})
 	md.action()
-	md.act = wealth.Remove
-	md.info("remove", "removes an asset", []string{"r"})
-	md.action()
+
+	rm.act = wealth.Remove
+	rm.info("remove", "removes an asset", []string{"r"})
+	rm.action()
 	w.cmd.Subcommands = cli.Commands{ad.cmd, md.cmd, rm.cmd}
 
+	adt := &Command{}
+	adt.fp = a.config.TradeFile
+	adt.log = a.log
+	adt.res = a.trades
+	adt.act = trades.Add
+	adt.info("add", "add a trade", []string{"a"})
+	adt.action()
+
+	cls := &Command{}
+	cls.fp = a.config.TradeFile
+	cls.log = a.log
+	cls.res = a.trades
+	cls.act = trades.Close
+	cls.info("close", "Close a trade", []string{"c"})
+	cls.action()
+	t.cmd.Subcommands = cli.Commands{adt.cmd, cls.cmd}
 	/*
 
 		tm := &Command{}

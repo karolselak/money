@@ -96,6 +96,8 @@ func Modify(r money.Resource, log *logrus.Logger, c *cli.Context) (bool, error) 
 			}
 		}
 	}
+
+	println("Asset Modified!")
 	w.Update()
 	return true, nil
 }
