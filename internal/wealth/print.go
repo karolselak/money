@@ -1,4 +1,4 @@
-package base
+package wealth
 
 import (
 	"os"

@@ -1,4 +1,4 @@
-package trade
+package trades
 
 import (
 	"fmt"
@@ -31,7 +31,6 @@ func List(r money.Resource, log *logrus.Logger, c *cli.Context) (bool, error) {
 		amnt = t.Open[i].Amount
 		t.Update()
 		curr = t.Open[i].Current
-		println(curr)
 		data[i] = append(data[i], fmt.Sprintf("%3.5f %s %3.5f", cost, dir, amnt))
 		data[i] = append(data[i], fmt.Sprintf("%3.5f", curr))
 	}

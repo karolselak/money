@@ -1,4 +1,4 @@
-package base
+package wealth
 
 import (
 	"errors"
@@ -97,5 +97,20 @@ func Modify(r money.Resource, log *logrus.Logger, c *cli.Context) (bool, error) 
 		}
 	}
 	w.Update()
+	return true, nil
+}
+
+func Remove(r money.Resource, log *logrus.Logger, c *cli.Context) (bool, error) {
+	w := r.(*money.Wealth)
+	s := c.Args().Get(0)
+	var sym string
+	for i := 0; i < 2; i++ {
+		for j := 0; j < len(w.Wealth[i].Assets); j++ {
+			sym = w.Wealth[i].Assets[j].Symbol
+			if sym == s {
+				w.Wealth[i].Assets = w.Wealth[i].Assets[:j+copy(w.Wealth[i].Assets[j:], w.Wealth[i].Assets[j+1:])]
+			}
+		}
+	}
 	return true, nil
 }

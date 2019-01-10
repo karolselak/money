@@ -16,9 +16,13 @@ type Resource interface {
 // Fn function type
 type Fn func(Resource, *logrus.Logger, *cli.Context) (bool, error)
 
-// Prices
+// Prices map contains updated prices
 var Prices map[string]float64
+
+// Currencies contains money.Name for cryptocurrencies
 var Currencies []string
+
+// Symbols contains money.Symbol for cryptocurrencies
 var Symbols []string
 
 // FetchPrices updates prices in Prices

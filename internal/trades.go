@@ -17,15 +17,17 @@ type Trade struct {
 	Current float64 `json:"current"`
 }
 
+// Tradec closed trades
 type Tradec struct {
 	Base    string  `json:"base"`
 	Invs    string  `json:"invs"`
 	Claim   bool    `json:"claim"`
 	Cost    float64 `json:"cost"`
 	Profit  float64 `json:"profit"`
-	percent float64 `json:"percent"`
+	Percent float64 `json:"percent"`
 }
 
+// Update runs after commands that modify the struct fields
 func (t *Trades) Update() {
 	var csym string
 	var isym string

@@ -24,18 +24,7 @@ func (c *Command) info(n, usg string, ali []string) {
 	c.cmd.Usage = usg
 	c.log.Info("Command.info, names, done")
 }
-func (c *Command) flag(include bool, finfo ...string) {
-	if include == true {
-		f := []cli.Flag{
-			cli.StringFlag{
-				Name:  finfo[0],
-				Usage: finfo[1],
-				Value: finfo[2],
-			},
-		}
-		c.cmd.Flags = f
-	}
-}
+
 func (c *Command) action() {
 	c.log.Info("Command.action")
 	c.cmd.Action = func(cntxt *cli.Context) error {

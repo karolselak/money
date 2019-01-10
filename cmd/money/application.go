@@ -6,8 +6,9 @@ import (
 	"time"
 
 	money "github.com/mohfunk/money/internal"
-	"github.com/mohfunk/money/internal/base"
-	"github.com/mohfunk/money/internal/trade"
+	"github.com/mohfunk/money/internal/budget"
+	"github.com/mohfunk/money/internal/trades"
+	"github.com/mohfunk/money/internal/wealth"
 	"github.com/mohfunk/money/pkg/util"
 	"github.com/sirupsen/logrus"
 	"github.com/urfave/cli"
@@ -21,12 +22,13 @@ type Application struct {
 	config *money.Config
 	wealth money.Resource
 	trades money.Resource
+	budget money.Resource
 }
 
 func (a *Application) info() {
 	a.app.Name = "money"
 	a.app.Usage = "track your finances"
-	a.app.Version = "0.0.5"
+	a.app.Version = "0.0.6"
 	a.app.Compiled = time.Now()
 	a.app.Copyright = "(c) MIT 2019"
 	a.app.Authors = []cli.Author{
@@ -64,6 +66,7 @@ func (a *Application) init() {
 	a.config.Configure()
 	a.wealth = &money.Wealth{}
 	a.trades = &money.Trades{}
+	a.budget = &money.Budget{}
 	a.setLog()
 	a.log.Info(" Log set ")
 	a.info()
@@ -91,90 +94,110 @@ func (a *Application) run() {
 	}
 	a.log.Info("app running")
 }
+
 func (a *Application) register() *[]Command {
-	ls := &Command{}
-	ls.fp = a.config.DataFile
-	ls.log = a.log
-	ls.res = a.wealth
-	ls.act = base.List
+
+	w := &Command{}
+	t := &Command{}
+	b := &Command{}
+
+	w.fp = a.config.DataFile
+	t.fp = a.config.TradeFile
+	b.fp = a.config.BudgetFile
+
+	w.log = a.log
+	t.log = a.log
+	b.log = a.log
+
+	w.res = a.wealth
+	t.res = a.trades
+	b.res = a.budget
+
+	w.act = wealth.List
+	t.act = trades.List
+	b.act = budget.List
+
+	w.info("wealth", "lists all assets", []string{"w"})
+	t.info("trades", "lists all trades", []string{"t"})
+	b.info("budget", "lists budget", []string{"b"})
+
+	w.action()
+	t.action()
+	b.action()
 
 	ad := &Command{}
-	ad.fp = a.config.DataFile
-	ad.log = a.log
-	ls.res = a.wealth
-	ad.act = base.Add
-
 	md := &Command{}
+	rm := &Command{}
+	ad.fp = a.config.DataFile
 	md.fp = a.config.DataFile
+	rm.fp = a.config.DataFile
+	ad.log = a.log
 	md.log = a.log
+	rm.log = a.log
+	ad.res = a.wealth
 	md.res = a.wealth
-	md.act = base.Modify
-
-	tr := &Command{}
-	tr.fp = a.config.TradeFile
-	tr.log = a.log
-	tr.res = a.trades
-	tr.act = trade.List
-
-	tm := &Command{}
-	tm.fp = a.config.TradeFile
-	tm.log = a.log
-	tm.res = a.trades
-	tm.act = trade.Mod
-
-	ta := &Command{}
-	ta.fp = a.config.TradeFile
-	ta.log = a.log
-	ta.res = a.trades
-	ta.act = trade.Add
-
-	tc := &Command{}
-	tc.fp = a.config.TradeFile
-	tc.log = a.log
-	tc.res = a.trades
-	tc.act = trade.BList
-
-	tac := &Command{}
-	tac.fp = a.config.TradeFile
-	tac.log = a.log
-	tac.res = a.trades
-	tac.act = trade.Close
-
-	ls.info("ls", "lists all assets", []string{"l"})
-	ls.flag(false)
-	ls.action()
-
-	ad.info("ad", "add an asset type", []string{"a"})
-	ad.flag(true, "type, t", "c", "specifies asset type")
+	rm.res = a.wealth
+	ad.act = wealth.Add
+	ad.info("add", "add an asset type", []string{"a"})
 	ad.action()
-
-	md.info("md", "mod an asset", []string{"m"})
-	md.flag(false)
+	md.act = wealth.Modify
+	md.info("modify", "mod an asset", []string{"m"})
 	md.action()
+	md.act = wealth.Remove
+	md.info("remove", "removes an asset", []string{"r"})
+	md.action()
+	w.cmd.Subcommands = cli.Commands{ad.cmd, md.cmd, rm.cmd}
 
-	tr.info("ls-trade", "mod an asset", []string{"tl"})
-	tr.flag(false)
-	tr.action()
+	/*
 
-	tm.info("trmod", "mod an asset", []string{"tm"})
-	tm.flag(false)
-	tm.action()
+		tm := &Command{}
+		tm.fp = a.config.TradeFile
+		tm.log = a.log
+		tm.res = a.trades
+		tm.act = trade.Mod
 
-	ta.info("tradd", "mod an asset", []string{"ta"})
-	ta.flag(false)
-	ta.action()
+		ta := &Command{}
+		ta.fp = a.config.TradeFile
+		ta.log = a.log
+		ta.res = a.trades
+		ta.act = trade.Add
 
-	tc.info("lsctr", "mod an asset", []string{"lc"})
-	tc.flag(false)
-	tc.action()
+		tc := &Command{}
+		tc.fp = a.config.TradeFile
+		tc.log = a.log
+		tc.res = a.trades
+		tc.act = trade.BList
 
-	tac.info("tac", "mod an asset", []string{"tc"})
-	tac.flag(false)
-	tac.action()
+		tac := &Command{}
+		tac.fp = a.config.TradeFile
+		tac.log = a.log
+		tac.res = a.trades
+		tac.act = trade.Close
 
-	c := &[]Command{*ls, *ad, *md, *tr, *tm, *ta, *tc, *tac}
+		ls.info("ls", "lists all assets", []string{"l"})
+		ls.action()
+
+
+
+		tr.info("ls-trade", "mod an asset", []string{"tl"})
+		tr.action()
+
+		tm.info("trmod", "mod an asset", []string{"tm"})
+		tm.action()
+
+		ta.info("tradd", "mod an asset", []string{"ta"})
+		ta.action()
+
+		tc.info("lsctr", "mod an asset", []string{"lc"})
+		tc.action()
+
+		tac.info("tac", "mod an asset", []string{"tc"})
+		tac.action()
+
+	*/
+	c := &[]Command{*w, *t, *b}
 	a.log.Info("Commands registered")
-	a.app.Commands = cli.Commands{ls.cmd, ad.cmd, md.cmd, tr.cmd, tm.cmd, ta.cmd, tc.cmd, tac.cmd}
+	a.app.Commands = cli.Commands{w.cmd, t.cmd, b.cmd}
 	a.log.Info("cli.Commands registered")
 	return c
 }
