@@ -15,5 +15,6 @@ go_import_path: github.com/disiqueira/gocurrency
 go_import_path: github.com/shopspring/decimal
 go_import_path: github.com/anaskhan96/soup
 
-	
-	
+os: linux
+group: stable
+dist: trusty
